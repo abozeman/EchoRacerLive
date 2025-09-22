@@ -26,7 +26,7 @@ namespace Assets.CryptoKartz.Scripts.Managers
 
         //public GameObject warningCube;
         //public TTSSpeaker ttsSpeaker;
-        public float environmentOffset = 0f;
+        public Vector3 startLineOffset = new Vector3(-1.29799998f, 1.07f, 0.138999999f);
 
         //Car Transform Data
         private Vector3 newCarPosition;
@@ -47,6 +47,7 @@ namespace Assets.CryptoKartz.Scripts.Managers
         private float maxThrottle = .6f;
         public float Steering = 0;
         public float Throttle = 0;
+        //private Quaternion offsetRot = new Quaternion(0f, 1f, 0f, 0f);
 
 
         #region Publish Sterring/Throttle
@@ -249,9 +250,16 @@ namespace Assets.CryptoKartz.Scripts.Managers
         }
         private void handleTelemetryData(TelemetryData telemetryData)
         {
-            var carPosition = new Vector3(telemetryData.posX * -1, telemetryData.posY, telemetryData.posZ);
-            //var carRotation = new Quaternion(telemetryData.rotX * -1, telemetryData.rotY * -1, telemetryData.rotZ * -1, telemetryData.rotW);
+            //Get The Raw Measurement First
+            var carPosition = new Vector3(telemetryData.posX, telemetryData.posY, telemetryData.posZ);
+
+            //Apply Environment Offset
+            carPosition += startLineOffset;
+
+            //Change from Right Handed Coords to Left Handed Coords
+            //var carPosition = new Vector3(rawCarPosition.x * -1, rawCarPosition.y, rawCarPosition.z);
             var carRotation = new Quaternion(0, telemetryData.rotY * -1, 0, telemetryData.rotW);
+
 
 
             if (firstTime)
@@ -268,10 +276,6 @@ namespace Assets.CryptoKartz.Scripts.Managers
             {
                 newCarPosition = carPosition;
                 newCarRotation = carRotation;
-
-                //now lerp oldCarPosition and newCarPosition use Time.Delta
-                //carNetworkTransform.WritePosition(Vector3.Lerp(oldCarPosition, newCarPosition, Time.deltaTime));
-                //carNetworkTransform.WriteRotation(Quaternion.Lerp(oldCarRotation, newCarRotation, Time.deltaTime));
 
                 transform.SetLocalPositionAndRotation(carPosition, carRotation);
 
@@ -326,7 +330,7 @@ namespace Assets.CryptoKartz.Scripts.Managers
             IsOverlapping = vRaceStateData.overlapFlag;
 
             var warningCube = transform.Find("WarningCube");
-            var warningPosition = new Vector3(vRaceStateData.px * -1, environmentOffset, vRaceStateData.pz);
+            var warningPosition = new Vector3(vRaceStateData.px * -1, startLineOffset.y, vRaceStateData.pz);
             warningCube.transform.SetPositionAndRotation(warningPosition, warningCube.transform.rotation);
             //warningCube.GetComponent<CarEventManager>().cubeOn = true;
         }
