@@ -58,3 +58,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerPrefab: {fileID: 7475731302803229291, guid: 1ca030a6cdfffd3468133a8b1e795bf2, type: 3}
+  _liveCarPrefab: {fileID: 8085886018962088951, guid: 09624b38fd7149d4388b7313cda112d9, type: 3}

@@ -15,7 +15,10 @@ namespace cryptokartz.Scripts.GameControllers
     {
 
         [SerializeField] private NetworkObject _playerPrefab;
+        [SerializeField] private NetworkObject _liveCarPrefab;
         private readonly Dictionary<PlayerRef, NetworkObject> _playerMap = new Dictionary<PlayerRef, NetworkObject>();
+        private readonly Dictionary<PlayerRef, NetworkObject> _liveCarMap = new Dictionary<PlayerRef, NetworkObject>();
+        private readonly Dictionary<PlayerRef, NetworkObject> _simulatedCarMap = new Dictionary<PlayerRef, NetworkObject>();
 
 
         private int _playerId;
@@ -48,13 +51,18 @@ namespace cryptokartz.Scripts.GameControllers
                 if (_playerCount == 0) return;
 
                 NetworkObject character;
+                NetworkObject liveCar;
+                NetworkObject simulatedCar;
 
                 //Debug.Log($"_playerId: {_playerId}");
                 //Debug.Log($"PlayerCount: {_playerCount}");
                 //Debug.Log($"TrackId: {TrackId.PropertyValue.ToString()}");
 
                 character = grlAvatarSpawn(_playerPrefab, player);
+                liveCar = grlLiveCarSpawn(_liveCarPrefab, player);
                 runner.SetPlayerObject(player, character);
+                _playerMap[player] = character;
+                _liveCarMap[player] = liveCar;
 
 
                 Log.Info($"Spawn for Player: {player}");
@@ -75,6 +83,17 @@ namespace cryptokartz.Scripts.GameControllers
                 );
         }
 
+        private NetworkObject grlLiveCarSpawn(NetworkObject _objPrefab, PlayerRef player)
+        {
+            return Runner.Spawn(
+                _objPrefab,
+                Vector3.zero,
+                Quaternion.identity,
+                inputAuthority: player,
+                InitializeLiveCarBeforeSpawn
+                );
+        }
+
         private NetworkObject grlTrackSpawn(NetworkObject _trackPrefab, PlayerRef player)
         {
             return Runner.Spawn(
@@ -91,6 +110,9 @@ namespace cryptokartz.Scripts.GameControllers
         }
 
         private void InitializeTrackBeforeSpawn(NetworkRunner runner, NetworkObject obj)
+        {
+        }
+        private void InitializeLiveCarBeforeSpawn(NetworkRunner runner, NetworkObject obj)
         {
         }
 

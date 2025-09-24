@@ -129,15 +129,15 @@ namespace Assets.CryptoKartz.Scripts.Managers
 
         }
 
-        IEnumerator ControlPublishOld(int type, float valueFloat)
-        {
-            var value = valueFloat / 90f;
+        //IEnumerator ControlPublishOld(int type, float valueFloat)
+        //{
+        //    var value = valueFloat / 90f;
 
-            client.Publish(string.Format("car.cc.{0}", vid), System.Text.Encoding.UTF8.GetBytes("{\"type\": \"" + type + "\",\"value\": \"" + value + "\"}"));
-            //Debug.Log("ControlPublish: " + "{\"type\": \"" + type + "\",\"value\": \"" + value + "\"}");
-            yield return new WaitForSecondsRealtime(.033f);
+        //    client.Publish(string.Format("car.cc.{0}", vid), System.Text.Encoding.UTF8.GetBytes("{\"type\": \"" + type + "\",\"value\": \"" + value + "\"}"));
+        //    //Debug.Log("ControlPublish: " + "{\"type\": \"" + type + "\",\"value\": \"" + value + "\"}");
+        //    yield return new WaitForSecondsRealtime(.033f);
 
-        }
+        //}
         #endregion
 
         #region MQTT Client
