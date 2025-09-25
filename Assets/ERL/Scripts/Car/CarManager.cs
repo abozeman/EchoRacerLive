@@ -35,7 +35,7 @@ namespace Assets.CryptoKartz.Scripts.Managers
         private Quaternion oldCarRotation;
 
         //Car Metadata
-        [SerializeField] public string vid;
+        [SerializeField] public string vid = "echoracer1";
         public int CurrentLap = 0;
         public bool IsOffTrack;
         public bool IsOverlapping;
@@ -47,51 +47,7 @@ namespace Assets.CryptoKartz.Scripts.Managers
         private float maxThrottle = .6f;
         public float Steering = 0;
         public float Throttle = 0;
-        //private Quaternion offsetRot = new Quaternion(0f, 1f, 0f, 0f);
-
-
-        #region Publish Sterring/Throttle
-        /// <summary>
-        /// Set the steering.
-        /// </summary>
-        /// <param name="steering">The steering.</param>
-        public void setSteering(float steering)
-        {
-            
-            try
-            {
-                Debug.Log("CarManager setSteering : " + steering);
-                StartCoroutine(ControlPublish(0, steering));
-
-            }
-            catch (Exception e)
-            {
-                Debug.Log("CarManager setSteering Exception: " + e); 
-            }
-            
-            
-            
-        }
-
-        /// <summary>
-        /// Set the throttle.
-        /// </summary>
-        /// <param name="throttle">The throttle.</param>
-        public void setThrottle(float throttle)
-        {
-            
-            try
-            {
-                Debug.Log("CarManager setThrottle : " + throttle);
-                StartCoroutine(ControlPublish(1, throttle));
-
-            }
-            catch (Exception e)
-            {
-                Debug.Log("CarManager setThrottle Exception: " + e);
-            }
-
-        }
+        
 
         public void setControl(float steering, float throttle)
         {
@@ -111,34 +67,29 @@ namespace Assets.CryptoKartz.Scripts.Managers
 
         IEnumerator ControlPublish(float steering, float throttle)
         {
+            float steeringToSend = 0.0f;
+            float throttleToSend = 0.0f;
+
+            steeringToSend = steering;
+            throttleToSend = throttle;
+
             try
             {
-                client.Publish(string.Format("car.cc.{0}", vid), System.Text.Encoding.UTF8.GetBytes("{\"steering\": \"" + steering + "\",\"throttle\": \"" + throttle + "\"}"));
+                client.Publish(string.Format("car.cc.{0}", vid), System.Text.Encoding.UTF8.GetBytes("{\"steering\": \"" + steeringToSend + "\",\"throttle\": \"" + throttleToSend + "\"}"));
                 //Debug.Log("ControlPublish: " + "{\"type\": \"" + type + "\",\"value\": \"" + value + "\"}");
-                //yield return new WaitForSecondsRealtime(.033f);
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
-                throw;
+                Debug.Log("ControlPublish Exception: " + e);
+                
             }
 
-            yield return null;
-
+            yield return new WaitForSecondsRealtime(.033f);
 
 
         }
 
-        //IEnumerator ControlPublishOld(int type, float valueFloat)
-        //{
-        //    var value = valueFloat / 90f;
-
-        //    client.Publish(string.Format("car.cc.{0}", vid), System.Text.Encoding.UTF8.GetBytes("{\"type\": \"" + type + "\",\"value\": \"" + value + "\"}"));
-        //    //Debug.Log("ControlPublish: " + "{\"type\": \"" + type + "\",\"value\": \"" + value + "\"}");
-        //    yield return new WaitForSecondsRealtime(.033f);
-
-        //}
-        #endregion
 
         #region MQTT Client
 

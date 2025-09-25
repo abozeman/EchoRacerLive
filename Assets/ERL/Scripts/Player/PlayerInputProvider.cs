@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using Fusion.Sockets;
 using static Assets.CryptoKartz.Scripts.CarController;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Assets.CryptoKartz.Scripts.Player
 {
@@ -11,6 +13,9 @@ namespace Assets.CryptoKartz.Scripts.Player
 
         // Local variable to store the input polled.
         CarInput carInput = new CarInput();
+        public InputActionReference ERLLeftStick;
+        public InputActionReference ERLRightStick;
+        private Vector2 carControlValue;
 
         public override void Spawned()
         {
@@ -19,12 +24,12 @@ namespace Assets.CryptoKartz.Scripts.Player
 
         public void BeforeUpdate()
         {
-            OVRInput.FixedUpdate();
-            carInput.steeringValue = OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick);
-            carInput.throttleValue = OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger);
 
-            if (OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger) > .5f) carInput.throttleValue *= -1;
+            carControlValue = ERLLeftStick.action.ReadValue<Vector2>();
+            carControlValue = ERLRightStick.action.ReadValue<Vector2>();
+            Debug.Log($"echoCarControlValue (x,y): ({carControlValue.x},{carControlValue.y}) ");
 
+            carInput.carControlValue = carControlValue;
         }
 
         void INetworkRunnerCallbacks.OnInput(NetworkRunner runner, NetworkInput input)
@@ -35,7 +40,7 @@ namespace Assets.CryptoKartz.Scripts.Player
 
                 var carOutput = new CarInput();
                 input.TryGet(out carOutput);
-                //Debug.Log($"carOutput (x,y): ({carOutput.steeringValue.x},{carOutput.steeringValue.y}) ");
+                Debug.Log($"carOutput (x,y): ({carOutput.carControlValue.x},{carOutput.carControlValue.y}) ");
                 //carInput = default;
             }
 

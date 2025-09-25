@@ -31,8 +31,7 @@ namespace Assets.CryptoKartz.Scripts
 
         public struct CarInput : INetworkInput
         {
-            public Vector2 steeringValue;
-            public float throttleValue;
+            public Vector2 carControlValue;
         }
 
         public override void Spawned()
@@ -47,8 +46,8 @@ namespace Assets.CryptoKartz.Scripts
         {
             if (GetInput<CarInput>(out var input) == false) return;
 
-            throttleInput = input.throttleValue;
-            steeringInput = input.steeringValue.x;
+            throttleInput = input.carControlValue.y;
+            steeringInput = input.carControlValue.x;
 
             //Debug.Log($"throttleInput : {throttleInput}");
             //Debug.Log($"steeringInput : {steeringInput}");

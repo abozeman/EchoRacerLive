@@ -168,8 +168,8 @@ MonoBehaviour:
   frontLeftWheel: {fileID: 776569405951012766}
   rearRightWheel: {fileID: 7932452969089125512}
   rearLeftWheel: {fileID: 2655631363372441481}
-  environmentOffset: 0
-  vid: grlcryptokartzvldt1
+  startLineOffset: {x: -1.298, y: 1.07, z: 0.139}
+  vid: echoracer1
   CurrentLap: 0
   IsOffTrack: 0
   IsOverlapping: 0

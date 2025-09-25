@@ -14,7 +14,7 @@ namespace Assets.CryptoKartz.Scripts
 
         private float steeringInput;
         private float throttleInput;
-        [SerializeField] private CarManager _carManager;
+        [SerializeField] public CarManager _carManager;
 
         private float currentSteerAngle;
         private float currentbreakForce;
@@ -40,34 +40,37 @@ namespace Assets.CryptoKartz.Scripts
 
             if (GetInput<CarInput>(out var input) == false) return;
 
-            throttleInput = input.throttleValue;
-            steeringInput = input.steeringValue.x;
+            throttleInput = input.carControlValue.y;
+            steeringInput = input.carControlValue.x;
+
+            _carManager.setControl(steeringInput, throttleInput);
+
 
             //Debug.Log($"throttleInput : {throttleInput}");
             //Debug.Log($"steeringInput : {steeringInput}");
 
             //We need to not send zero values to the car controller after we set a zeroInputDetected flag.
-            if(throttleInput == 0 && steeringInput == 0 && !zeroInputDetected)
-            {
-                zeroInputDetected = true;
-                _carManager.setControl(steeringInput, throttleInput);
-            }
-            else if ((throttleInput != 0 || steeringInput != 0) && zeroInputDetected)
-            {
-                zeroInputDetected = false;
-                _carManager.setControl(steeringInput, throttleInput);
+            //if (throttleInput == 0 && steeringInput == 0 && !zeroInputDetected)
+            //{
+            //    zeroInputDetected = true;
+            //    _carManager.setControl(steeringInput, throttleInput);
+            //}
+            //else if ((throttleInput != 0 || steeringInput != 0) && zeroInputDetected)
+            //{
+            //    zeroInputDetected = false;
+            //    _carManager.setControl(steeringInput, throttleInput);
 
-            } else if (throttleInput != 0 || steeringInput != 0)
-            {
-                _carManager.setControl(steeringInput, throttleInput);
-            }
+            //} else if (throttleInput != 0 || steeringInput != 0)
+            //{
+            //    _carManager.setControl(steeringInput, throttleInput);
+            //}
 
 
         }
 
         public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
         {
-            if (Object.Runner.IsServer && !Object.InputAuthority.IsRealPlayer) { Object.AssignInputAuthority(player); }
+            //if (Object.Runner.IsServer && !Object.InputAuthority.IsRealPlayer) { Object.AssignInputAuthority(player); }
 
         }
 
