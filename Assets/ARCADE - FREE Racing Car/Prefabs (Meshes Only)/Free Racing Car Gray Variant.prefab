@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Free Racing Car Gray Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 1863590785861631999, guid: c4cad50aa03bbca42938fe318344950b, type: 3}
+      propertyPath: SortKey
+      value: 1987411121
+      objectReference: {fileID: 0}
     - target: {fileID: 1880317207959290724, guid: c4cad50aa03bbca42938fe318344950b, type: 3}
       propertyPath: m_RootOrder
       value: 0

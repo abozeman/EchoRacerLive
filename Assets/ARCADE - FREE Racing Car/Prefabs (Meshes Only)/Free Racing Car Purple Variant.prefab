@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Free Racing Car Purple Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 1863590785861631999, guid: c4cad50aa03bbca42938fe318344950b, type: 3}
+      propertyPath: SortKey
+      value: 3154715222
+      objectReference: {fileID: 0}
     - target: {fileID: 1880317207959290724, guid: c4cad50aa03bbca42938fe318344950b, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -61,6 +65,10 @@ PrefabInstance:
       value: 3782931224
       objectReference: {fileID: 0}
     - target: {fileID: 1967483991258903237, guid: c4cad50aa03bbca42938fe318344950b, type: 3}
+      propertyPath: NestedObjects.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1967483991258903237, guid: c4cad50aa03bbca42938fe318344950b, type: 3}
       propertyPath: NetworkedBehaviours.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -71,7 +79,7 @@ PrefabInstance:
     - target: {fileID: 1967483991258903237, guid: c4cad50aa03bbca42938fe318344950b, type: 3}
       propertyPath: 'NetworkedBehaviours.Array.data[1]'
       value: 
-      objectReference: {fileID: 9023512558588553503}
+      objectReference: {fileID: 9192325438529825032}
     - target: {fileID: 4485099863708357545, guid: c4cad50aa03bbca42938fe318344950b, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -92,9 +100,9 @@ MonoBehaviour:
   m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &9023512558588553503 stripped
+--- !u!114 &9192325438529825032 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7790446328150063090, guid: c4cad50aa03bbca42938fe318344950b, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7977421117034362853, guid: c4cad50aa03bbca42938fe318344950b, type: 3}
   m_PrefabInstance: {fileID: 1235338104090599149}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
