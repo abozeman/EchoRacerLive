@@ -351,6 +351,7 @@ MonoBehaviour:
   TrackExterior: {fileID: 7921685855535203042}
   TrackInterior: {fileID: 2493414495988845414}
   TrackStartLine: {fileID: 5311404500167440043}
+  _TrackId: ovaltrack
   _ExteriorCoordinates: []
   _ExteriorCoordinatesLength: 0
   _InteriorCoordinates: []

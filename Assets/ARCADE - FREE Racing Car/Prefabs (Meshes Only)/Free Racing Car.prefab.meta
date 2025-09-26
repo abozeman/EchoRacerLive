@@ -1,10 +1,7 @@
 fileFormatVersion: 2
 guid: c4cad50aa03bbca42938fe318344950b
-PrefabImporter:
-  externalObjects: {}
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+labels:
+- FusionPrefab
 AssetOrigin:
   serializedVersion: 1
   productId: 161085
@@ -12,3 +9,8 @@ AssetOrigin:
   packageVersion: 3.0
   assetPath: Assets/ARCADE - FREE Racing Car/Prefabs (Meshes Only)/Free Racing Car.prefab
   uploadId: 494158
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

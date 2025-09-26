@@ -43,8 +43,6 @@ namespace Assets.CryptoKartz.Scripts.Managers
         private NetworkTransform carNetworkTransform;
 
         //Car Steering/Throttle
-        private float maxSteering = .20f;
-        private float maxThrottle = .6f;
         public float Steering = 0;
         public float Throttle = 0;
         
@@ -85,7 +83,7 @@ namespace Assets.CryptoKartz.Scripts.Managers
                 
             }
 
-            yield return new WaitForSecondsRealtime(.033f);
+            yield return null;
 
 
         }
@@ -94,6 +92,14 @@ namespace Assets.CryptoKartz.Scripts.Managers
         #region MQTT Client
 
         #region Broker Settings
+        /// <summary>
+        /// Set ClientId.
+        /// </summary>
+        /// <param name="clientId">The clientId.</param>
+        public void SetClientId(string clientId)
+        {
+            this.clientId = clientId;
+        }
         /// <summary>
         /// Set broker address.
         /// </summary>
@@ -175,13 +181,17 @@ namespace Assets.CryptoKartz.Scripts.Managers
         
         public void Spawned()
         {
-            Debug.Log("Ready.");
+            if (Runner.IsServer)
+            {
+                Connect();
+                Debug.Log("CarManager Spawned");
+                carNetworkTransform = GetComponent<NetworkTransform>();
+            } else
+            {
+                return;
+            }
 
-            base.Start();
-
-            this.tmPro = transform.GetComponent("TMPInfo").gameObject;
-            this.lapNumText = transform.GetComponent("TMPInfo").gameObject;
-
+            
         }
 
 
@@ -382,56 +392,6 @@ namespace Assets.CryptoKartz.Scripts.Managers
 
 
 
-        }
-
-        IEnumerator SendControl()
-        {
-            //Debug.Log("ControlPublish: "+ Steering);
-            ControlPublish(Steering, Throttle);
-            yield return new WaitForSecondsRealtime(.05f);
-        }
-
-        IEnumerator ShowAndHideWarning(float delay)
-        {
-            //this.warningCube.SetActive(true);
-            yield return new WaitForSeconds(delay);
-            //this.warningCube.SetActive(false);
-        }
-
-        IEnumerator ShowAndHide(float delay)
-        {
-            var lapCube = GameObject.FindGameObjectWithTag("LapCube");
-
-            lapCube.GetComponent<MeshRenderer>().enabled = true;
-            yield return new WaitForSeconds(delay);
-            lapCube.GetComponent<MeshRenderer>().enabled = false;
-            yield return new WaitForSeconds(delay - 2);
-
-
-        }
-
-        IEnumerator RaceControlStates()
-        {
-            RaceStatePublish("PRERACE");
-            yield return new WaitForSeconds(5f);
-            RaceStatePublish("COUNTDOWN");
-            yield return new WaitForSeconds(20f);
-            RaceStatePublish("FINALCOUNTDOWN");
-            yield return new WaitForSeconds(3f);
-            RaceStatePublish("INPROGRESS");
-            yield return new WaitForSeconds(150f);
-            RaceStatePublish("COMPLETE");
-
-        }
-
-        /// <summary>
-        /// Race state publish.
-        /// </summary>
-        /// <param name="raceState">The race state.</param>
-        public void RaceStatePublish(string raceState)
-        {
-            client.Publish("race.control.raceId", System.Text.Encoding.UTF8.GetBytes("{\"race_state\": \"" + raceState + "\"}"));
-            //Debug.Log("race state message published");
         }
 
         private void OnDestroy()

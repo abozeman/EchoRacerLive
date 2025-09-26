@@ -14,7 +14,7 @@ using Application = UnityEngine.Application;
 namespace Assets.CryptoKartz.Scripts.Managers
 {
 
-    public class ClientManagerDefaultV2 : ClientManagerBase
+    public class ClientManager : ClientManagerBase
     {
 
         Fusion.NetworkRunner runnerClient;

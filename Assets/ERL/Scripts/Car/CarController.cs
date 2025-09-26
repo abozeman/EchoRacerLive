@@ -7,13 +7,12 @@ using UnityEngine;
 
 namespace Assets.CryptoKartz.Scripts
 {
-    public class CarController : NetworkBehaviour, INetworkRunnerCallbacks
+    public class CarController : NetworkBehaviour
     {
 
         private float steeringInput;
         private float throttleInput;
         private float currentSteerAngle;
-        private float currentbreakForce;
 
         [SerializeField] private float motorForce;
         [SerializeField] private float breakForce;
@@ -29,14 +28,10 @@ namespace Assets.CryptoKartz.Scripts
         [SerializeField] private Transform rearLeftWheelTransform;
         [SerializeField] private Transform rearRightWheelTransform;
 
-        public struct CarInput : INetworkInput
-        {
-            public Vector2 carControlValue;
-        }
+       
 
         public override void Spawned()
         {
-            Object.Runner.AddCallbacks(this);
         }
 
         /// <summary>
@@ -44,14 +39,11 @@ namespace Assets.CryptoKartz.Scripts
         /// </summary>
         public override void FixedUpdateNetwork()
         {
-            if (GetInput<CarInput>(out var input) == false) return;
+            if (GetInput<Player.PlayerInputProvider.CarInput>(out var input) == false) return;
 
             throttleInput = input.carControlValue.y;
             steeringInput = input.carControlValue.x;
 
-            //Debug.Log($"throttleInput : {throttleInput}");
-            //Debug.Log($"steeringInput : {steeringInput}");
-            
             HandleMotor();
             HandleSteering();
             UpdateWheels();
@@ -67,17 +59,7 @@ namespace Assets.CryptoKartz.Scripts
         {
             frontLeftWheelCollider.motorTorque = throttleInput * motorForce;
             frontRightWheelCollider.motorTorque = throttleInput * motorForce;
-            //currentbreakForce = isBreaking ? breakForce : 0f;
-            //ApplyBreaking();
 
-        }
-
-        private void ApplyBreaking()
-        {
-            frontRightWheelCollider.brakeTorque = currentbreakForce;
-            frontLeftWheelCollider.brakeTorque = currentbreakForce;
-            rearLeftWheelCollider.brakeTorque = currentbreakForce;
-            rearRightWheelCollider.brakeTorque = currentbreakForce;
         }
 
         private void HandleSteering()
@@ -107,105 +89,6 @@ namespace Assets.CryptoKartz.Scripts
             wheelTransform.localPosition = pos;
         }
 
-        public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
-        {
-            //if (runner.IsServer && !Object.InputAuthority.IsRealPlayer) { Object.AssignInputAuthority(player); }
-
-        }
-
-        #region Unused Callbacks
-
-        public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
-        {
-
-        }
-
-        public void OnObjectEnterAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
-        {
-
-        }
-
-        public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
-        {
-
-        }
-
-        public void OnInput(NetworkRunner runner, NetworkInput input)
-        {
-
-        }
-
-        public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
-        {
-
-        }
-
-        public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
-        {
-
-        }
-
-        public void OnConnectedToServer(NetworkRunner runner)
-        {
-
-        }
-
-        public void OnDisconnectedFromServer(NetworkRunner runner, NetDisconnectReason reason)
-        {
-
-        }
-
-        public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token)
-        {
-
-        }
-
-        public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason)
-        {
-
-        }
-
-        public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message)
-        {
-
-        }
-
-        public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
-        {
-
-        }
-
-        public void OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data)
-        {
-
-        }
-
-        public void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken)
-        {
-
-        }
-
-        public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ReliableKey key, ArraySegment<byte> data)
-        {
-
-        }
-
-        public void OnReliableDataProgress(NetworkRunner runner, PlayerRef player, ReliableKey key, float progress)
-        {
-
-        }
-
-        public void OnSceneLoadDone(NetworkRunner runner)
-        {
-
-        }
-
-        public void OnSceneLoadStart(NetworkRunner runner)
-        {
-
-        }
-
-        #endregion
     }
 
 }

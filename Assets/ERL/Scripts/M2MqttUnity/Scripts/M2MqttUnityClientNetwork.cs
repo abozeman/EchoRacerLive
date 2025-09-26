@@ -1,5 +1,4 @@
-﻿using Fusion;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,8 +12,6 @@ namespace M2MqttUnity
     /// <summary>
     /// Fusion NetworkBehaviour MQTT client
     /// </summary>
-
-    [SimulationBehaviour(Modes = SimulationModes.Server)]
     public class M2MqttUnityClientNetwork : Fusion.SimulationBehaviour
     {
         [Header("MQTT broker configuration")]
@@ -28,7 +25,9 @@ namespace M2MqttUnity
         public bool autoConnect = true;
         public string mqttUserName = null;
         public string mqttPassword = null;
-        
+        public string clientId = null;
+
+
         /// <summary>
         /// Wrapped MQTT client
         /// </summary>
@@ -55,7 +54,7 @@ namespace M2MqttUnity
         /// </summary>
         public virtual void Connect()
         {
-            if (client == null || !client.IsConnected)
+            if (client == null || !client.IsConnected || clientId != null)
             {
                 StartCoroutine(DoConnect());
             }
@@ -211,7 +210,7 @@ namespace M2MqttUnity
             }
             catch (Exception e)
             {
-                Debug.LogErrorFormat("DecodeMessage FAILED! {0}", e.ToString());
+                //Debug.LogErrorFormat("DecodeMessage FAILED! {0}", e.ToString()); ;
             }
         }
 
@@ -258,10 +257,10 @@ namespace M2MqttUnity
                     client = new MqttClient(brokerAddress, brokerPort, isEncrypted, null, null, isEncrypted ? MqttSslProtocols.TLSv1_2 : MqttSslProtocols.None); //changed from SSL to TLS 1.2 
 
                     //Certificates
-                        //Version A
+                    //Version A
                     //System.Security.Cryptography.X509Certificates.X509Certificate cert = new System.Security.Cryptography.X509Certificates.X509Certificate();
                     //cert.Import(certificate.bytes); //This takes a TextAsset (certificate) as byte
-                        //Version B (CreateFromCertFile or CreateFromSignedFile)
+                    //Version B (CreateFromCertFile or CreateFromSignedFile)
                     //var cert_file= System.IO.Path.Combine(Application.streamingAssetsPath, certificateName);
                     //var cert = System.Security.Cryptography.X509Certificates.X509Certificate2.CreateFromCertFile(cert_file);
 
@@ -287,7 +286,7 @@ namespace M2MqttUnity
             yield return new WaitForEndOfFrame();
 
             client.Settings.TimeoutOnConnection = timeoutOnConnection;
-            string clientId = Guid.NewGuid().ToString();
+            //string clientId = Guid.NewGuid().ToString();
             try
             {
                 client.Connect(clientId, mqttUserName, mqttPassword);

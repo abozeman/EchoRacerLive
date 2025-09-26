@@ -119,6 +119,35 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &411631288 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1648101084558110080, guid: a36679fe20b996941975fbf6409289cc, type: 3}
+  m_PrefabInstance: {fileID: 8741342950581796475}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &411631292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 411631288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5932d5d2ecb117e4090936f1eda3d88a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brokerAddress: 192.168.2.49
+  brokerPort: 1883
+  isEncrypted: 0
+  certificateName: 
+  connectionDelay: 500
+  timeoutOnConnection: 30000
+  autoConnect: 1
+  mqttUserName: abozeman8466
+  mqttPassword: autumn8466
+  clientId: echorace1-server-manager
+  _runnerClientPrefab: {fileID: 7464808677127659326, guid: 469411e9c472ed54897d5befebbef732, type: 3}
+  _runnerServerPrefab: {fileID: 4944699815173829707, guid: 47d3b8029d89e814a8ed7bb297bb3a1c, type: 3}
 --- !u!1001 &8741342950581796475
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -177,20 +206,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6231780698377380709, guid: a36679fe20b996941975fbf6409289cc, type: 3}
       propertyPath: Flags
-      value: 262145
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6231780698377380709, guid: a36679fe20b996941975fbf6409289cc, type: 3}
       propertyPath: SortKey
       value: 84500034
       objectReference: {fileID: 0}
     - target: {fileID: 8949408859196580954, guid: a36679fe20b996941975fbf6409289cc, type: 3}
+      propertyPath: clientId
+      value: server-manager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8949408859196580954, guid: a36679fe20b996941975fbf6409289cc, type: 3}
       propertyPath: autoConnect
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8949408859196580954, guid: a36679fe20b996941975fbf6409289cc, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1648101084558110080, guid: a36679fe20b996941975fbf6409289cc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 411631292}
   m_SourcePrefab: {fileID: 100100000, guid: a36679fe20b996941975fbf6409289cc, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

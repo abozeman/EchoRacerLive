@@ -11,6 +11,11 @@ namespace Assets.CryptoKartz.Scripts.Player
     public class PlayerInputProvider : NetworkBehaviour, INetworkRunnerCallbacks, IBeforeUpdate
     {
 
+        public struct CarInput : INetworkInput
+        {
+            public Vector2 carControlValue;
+        }
+
         // Local variable to store the input polled.
         CarInput carInput = new CarInput();
         public InputActionReference ERLLeftStick;

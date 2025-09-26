@@ -7,14 +7,13 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using uPLibrary.Networking.M2Mqtt.Messages;
 using Application = UnityEngine.Application;
 
 namespace Assets.CryptoKartz.Scripts.Managers
 {
 
-    public class ServerManagerDefaultV2 : ServerManagerBaseNetwork
+    public class ServerManager : ServerManagerBaseNetwork
     {
         private List<string> eventMessages = new List<string>();
 
@@ -24,6 +23,14 @@ namespace Assets.CryptoKartz.Scripts.Managers
         #region MQTT Client
 
         #region Broker Settings
+        /// <summary>
+        /// Set ClientId.
+        /// </summary>
+        /// <param name="clientId">The clientId.</param>
+        public void SetClientId(string clientId)
+        {
+            this.clientId = clientId;
+        }
         /// <summary>
         /// Set broker address.
         /// </summary>
@@ -85,14 +92,14 @@ namespace Assets.CryptoKartz.Scripts.Managers
         #region Subscription/Unsubscription
         protected override void SubscribeTopics()
         {
-            client.Subscribe(new string[] { string.Format("gameserver.agent.{0}", "*") }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
-            client.Subscribe(new string[] { string.Format("gameclient.agent.{0}", "*") }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+            client.Subscribe(new string[] { string.Format("server/manager/*", clientId) }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+            client.Subscribe(new string[] { string.Format("client/manager/*", clientId) }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
         }
 
         protected override void UnsubscribeTopics()
         {
-            client.Unsubscribe(new string[] { string.Format("gameserver.agent.{0}", "*") });
-            client.Unsubscribe(new string[] { string.Format("gameclient.agent.{0}", "*") });
+            client.Unsubscribe(new string[] { string.Format("server/manager/{0}", clientId) });
+            client.Unsubscribe(new string[] { string.Format("client/manager/{0}", clientId) });
         }
 
         #endregion
@@ -106,13 +113,13 @@ namespace Assets.CryptoKartz.Scripts.Managers
                 string msg = System.Text.Encoding.UTF8.GetString(message);
                 //string msg = "{"type": "1", "vid": "grlv0telemetry", "posX": "0.85", "posZ": "-0.018", "velX": "-0.0", "velZ": "-0.003", "rotW": "0.987", "rotX": "-0.117", "rotY": "0.014", "rotZ": "0.105", "strAngle": "0.0", "strThrottle": "0.0"}"
                 Debug.Log("msg: " + msg);
-                if (topic.Contains("gameserver"))
+                if (topic.Contains("server/manager/startserver"))
                 {
                     var result = await StartServer(msg);
                     Debug.Log("StartServer Result: " + result);
                 }
 
-                if (topic.Contains("gameclient"))
+                if (topic.Contains("client.manager"))
                 {
                     var result = await StartClient();
                     Debug.Log("StartClient Result: " + result);
@@ -201,15 +208,8 @@ namespace Assets.CryptoKartz.Scripts.Managers
 
         public async Task<StartGameResult> StartClient()
         {
-            int loadERLTask = await LoadERLAsync();
             StartGameResult startERLTask = await StartSessionAsync("ERLRace", SceneRef.FromIndex((int)SceneDefs.ERLRace));
             return startERLTask;
-        }
-
-        public async Task<int> LoadERLAsync() // assume we return an int from this long running operation 
-        {
-            await SceneManager.LoadSceneAsync((int)SceneDefs.ERLRace, LoadSceneMode.Additive);
-            return 1;
         }
 
         public async Task<StartGameResult> StartSessionAsync(string sessionName, SceneRef scene) // assume we return an int from this long running operation 

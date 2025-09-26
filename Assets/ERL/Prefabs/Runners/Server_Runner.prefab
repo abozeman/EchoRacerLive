@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6168216696538460053}
   - component: {fileID: 4944699815173829707}
-  - component: {fileID: 6992149464831760616}
+  - component: {fileID: -5049880988710550239}
   m_Layer: 0
   m_Name: Server_Runner
   m_TagString: Untagged
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: -1199893898, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6992149464831760616
+--- !u!114 &-5049880988710550239
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -54,8 +54,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 9136405882168651304}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 006e749d2ac79fe4fa98245e9f0387d6, type: 3}
+  m_Script: {fileID: 11500000, guid: ce63ce2e9421e384b85c1b4e28ff6fc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  brokerAddress: 192.168.2.49
+  brokerPort: 1883
+  isEncrypted: 0
+  certificateName: 
+  connectionDelay: 500
+  timeoutOnConnection: 30000
+  autoConnect: 1
+  mqttUserName: abozeman8466
+  mqttPassword: autumn8466
+  clientId: echorace1-game-manager
   _playerPrefab: {fileID: 7475731302803229291, guid: 1ca030a6cdfffd3468133a8b1e795bf2, type: 3}
-  _liveCarPrefab: {fileID: 8085886018962088951, guid: 09624b38fd7149d4388b7313cda112d9, type: 3}
+  _carPrefab: {fileID: 8085886018962088951, guid: 09624b38fd7149d4388b7313cda112d9, type: 3}
+  _carPrefabs:
+  - {fileID: 8085886018962088951, guid: 09624b38fd7149d4388b7313cda112d9, type: 3}
+  _trackPrefabs:
+  - {fileID: 6700943458507327105, guid: f5de1963829db9a43888c9e1d4e62166, type: 3}

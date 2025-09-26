@@ -1,10 +1,7 @@
 fileFormatVersion: 2
 guid: 98c57f100a7d7684dba02b8725bbc5d8
-PrefabImporter:
-  externalObjects: {}
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+labels:
+- FusionPrefab
 AssetOrigin:
   serializedVersion: 1
   productId: 161085
@@ -13,3 +10,8 @@ AssetOrigin:
   assetPath: Assets/ARCADE - FREE Racing Car/Prefabs (Meshes Only)/Free Racing Car
     Purple Variant.prefab
   uploadId: 494158
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
