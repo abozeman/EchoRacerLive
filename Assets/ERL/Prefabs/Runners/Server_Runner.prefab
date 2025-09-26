@@ -68,8 +68,11 @@ MonoBehaviour:
   mqttPassword: autumn8466
   clientId: echorace1-game-manager
   _playerPrefab: {fileID: 7475731302803229291, guid: 1ca030a6cdfffd3468133a8b1e795bf2, type: 3}
-  _carPrefab: {fileID: 8085886018962088951, guid: 09624b38fd7149d4388b7313cda112d9, type: 3}
+  _liveCarPrefab: {fileID: 6675130324412907308, guid: f26b0431d85657747be54db10cf595c1, type: 3}
+  _ghostCarPrefab: {fileID: 7386588716105398007, guid: 3d0c9d1724d72024b98fc0dab1765a1d, type: 3}
   _carPrefabs:
-  - {fileID: 8085886018962088951, guid: 09624b38fd7149d4388b7313cda112d9, type: 3}
+  - {fileID: 7386588716105398007, guid: 3d0c9d1724d72024b98fc0dab1765a1d, type: 3}
+  - {fileID: 6675130324412907308, guid: f26b0431d85657747be54db10cf595c1, type: 3}
+  - {fileID: 1174405089046144514, guid: 7cd94cea364d45f4aa35cfaedc7921fa, type: 3}
   _trackPrefabs:
   - {fileID: 6700943458507327105, guid: f5de1963829db9a43888c9e1d4e62166, type: 3}

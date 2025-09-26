@@ -17,7 +17,8 @@ namespace cryptokartz.Scripts.GameControllers
     {
 
         [SerializeField] private NetworkObject _playerPrefab;
-        [SerializeField] private NetworkObject _carPrefab;
+        [SerializeField] private NetworkObject _liveCarPrefab;
+        [SerializeField] private NetworkObject _ghostCarPrefab;
         [SerializeField] private List<NetworkObject> _carPrefabs = new List<NetworkObject>();
         [SerializeField] private List<NetworkObject> _trackPrefabs = new List<NetworkObject>();
         private readonly Dictionary<PlayerRef, NetworkObject> _playerMap = new Dictionary<PlayerRef, NetworkObject>();
@@ -154,11 +155,26 @@ namespace cryptokartz.Scripts.GameControllers
                 string msg = System.Text.Encoding.UTF8.GetString(message);
                 //string msg = "{"type": "1", "vid": "grlv0telemetry", "posX": "0.85", "posZ": "-0.018", "velX": "-0.0", "velZ": "-0.003", "rotW": "0.987", "rotX": "-0.117", "rotY": "0.014", "rotZ": "0.105", "strAngle": "0.0", "strThrottle": "0.0"}"
                 //Debug.Log("msg: " + msg);
-                if (topic.Contains("game/manager/spawncar"))
+                if (topic.Contains("game/manager/spawnlivecar"))
                 {
-                    grlCarSpawn(_carPrefab);
+                    grlCarSpawn(_liveCarPrefab);
 
                 }
+                else if (topic.Contains("game/manager/spawnghostcar"))
+                {
+                    grlCarSpawn(_ghostCarPrefab);
+                }
+                //else if (topic.Contains("game/manager/spawntrack"))
+                //{
+                //    int trackIndex = UnityEngine.Random.Range(0, _trackPrefabs.Count);
+                //    NetworkObject newTrack = _trackPrefabs[trackIndex];
+                //    Runner.Spawn(
+                //        newTrack,
+                //        Vector3.zero,
+                //        Quaternion.identity
+                //        );
+                //}
+
 
 
 

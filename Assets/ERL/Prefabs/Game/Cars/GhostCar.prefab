@@ -527,8 +527,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.08, y: 0.08, z: 0.08}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6451445208080640647}
   - {fileID: 2527733977692284545}
@@ -589,16 +589,16 @@ MonoBehaviour:
   certificateName: 
   connectionDelay: 500
   timeoutOnConnection: 30000
-  autoConnect: 0
+  autoConnect: 1
   mqttUserName: abozeman8466
   mqttPassword: autumn8466
-  clientId: echoracer1
+  clientId: echoghostracer1
   frontRightWheel: {fileID: 5371392487309485913}
   frontLeftWheel: {fileID: 2049794177741617822}
   rearRightWheel: {fileID: 8692231787777776008}
   rearLeftWheel: {fileID: 3633854682971359881}
   startLineOffset: {x: -1.298, y: 1.07, z: 0.139}
-  vid: echoracer1
+  vid: echoghostracer1
   CurrentLap: 0
   IsOffTrack: 0
   IsOverlapping: 0

@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5881900453848621093}
-  - component: {fileID: 8949408859196580954}
   - component: {fileID: 6231780698377380709}
+  - component: {fileID: 4530607353417798192}
   m_Layer: 0
   m_Name: ServerStartup
   m_TagString: Untagged
@@ -33,29 +33,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8949408859196580954
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1648101084558110080}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e34f85918fba7e6488da06ba048fa074, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  brokerAddress: 192.168.2.49
-  brokerPort: 1883
-  isEncrypted: 0
-  certificateName: 
-  connectionDelay: 500
-  timeoutOnConnection: 30000
-  autoConnect: 0
-  mqttUserName: abozeman8466
-  mqttPassword: autumn8466
-  _runnerClientPrefab: {fileID: 7464808677127659326, guid: 469411e9c472ed54897d5befebbef732, type: 3}
-  _runnerServerPrefab: {fileID: 4944699815173829707, guid: 47d3b8029d89e814a8ed7bb297bb3a1c, type: 3}
 --- !u!114 &6231780698377380709
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74,3 +51,27 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours: []
   ForceRemoteRenderTimeframe: 0
+--- !u!114 &4530607353417798192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1648101084558110080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5932d5d2ecb117e4090936f1eda3d88a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brokerAddress: 192.168.2.49
+  brokerPort: 1883
+  isEncrypted: 0
+  certificateName: 
+  connectionDelay: 500
+  timeoutOnConnection: 30000
+  autoConnect: 1
+  mqttUserName: abozeman8466
+  mqttPassword: autumn8466
+  clientId: echorace1-server-manager
+  _runnerClientPrefab: {fileID: 7464808677127659326, guid: 469411e9c472ed54897d5befebbef732, type: 3}
+  _runnerServerPrefab: {fileID: 4944699815173829707, guid: 47d3b8029d89e814a8ed7bb297bb3a1c, type: 3}
