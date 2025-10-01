@@ -3201,6 +3201,10 @@ PrefabInstance:
       propertyPath: m_Height
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1099137523763650219, guid: 1782b89ac15b3c34cbc28f0ede57d895, type: 3}
+      propertyPath: m_StepOffset
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1447839107455911567, guid: 1782b89ac15b3c34cbc28f0ede57d895, type: 3}
       propertyPath: m_OcclusionShaderMode
       value: 2
@@ -3253,6 +3257,10 @@ PrefabInstance:
       propertyPath: m_AndroidXRSettings
       value: 
       objectReference: {fileID: 3375922771489076480}
+    - target: {fileID: 4633096128568383770, guid: 1782b89ac15b3c34cbc28f0ede57d895, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5288399891378806173, guid: 1782b89ac15b3c34cbc28f0ede57d895, type: 3}
       propertyPath: m_CameraYOffset
       value: 0
@@ -3317,6 +3325,10 @@ PrefabInstance:
       propertyPath: 'm_ActionAssets.Array.data[2]'
       value: 
       objectReference: {fileID: -944628639613478452, guid: 2e52aefc8c982aa458ead95f51a6749e, type: 3}
+    - target: {fileID: 8717766744997496073, guid: 1782b89ac15b3c34cbc28f0ede57d895, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8938734314145983681, guid: 1782b89ac15b3c34cbc28f0ede57d895, type: 3}
       propertyPath: m_IsActive
       value: 0

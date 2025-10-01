@@ -45,7 +45,10 @@ namespace Assets.CryptoKartz.Scripts.Managers
         //Car Steering/Throttle
         public float Steering = 0;
         public float Throttle = 0;
-        
+
+        [SerializeField] public bool righthanded = true;
+
+
 
         public void setControl(float steering, float throttle)
         {
@@ -209,17 +212,31 @@ namespace Assets.CryptoKartz.Scripts.Managers
             //lapCube.GetComponent<CarEventManager>().cubeOn = true;
 
         }
+
+        
         private void handleTelemetryData(TelemetryData telemetryData)
         {
             //Get The Raw Measurement First
             var carPosition = new Vector3(telemetryData.posX, telemetryData.posY, telemetryData.posZ);
+            var carRotation = new Quaternion(telemetryData.rotX, telemetryData.rotY, telemetryData.rotZ, telemetryData.rotW);
+
+
 
             //Apply Environment Offset
             carPosition += startLineOffset;
 
             //Change from Right Handed Coords to Left Handed Coords
             //var carPosition = new Vector3(rawCarPosition.x * -1, rawCarPosition.y, rawCarPosition.z);
-            var carRotation = new Quaternion(0, telemetryData.rotY * -1, 0, telemetryData.rotW);
+            var rotationFix = -1;
+            if (righthanded)
+            {
+                rotationFix = 1;
+                transform.rotation = Quaternion.LookRotation(-transform.forward, Vector3.up);
+
+            }
+
+            //carRotation = new Quaternion(telemetryData.rotX, telemetryData.rotY * rotationFix, telemetryData.rotZ, telemetryData.rotW);
+
 
 
 
