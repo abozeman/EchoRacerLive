@@ -3,16 +3,17 @@ using Fusion;
 using UnityEngine;
 namespace Assets.CryptoKartz.Scripts
 {
-    public class CarControllerLive : NetworkBehaviour
+    public class CarInputManagerLive : NetworkBehaviour
     {
 
         private float steeringInput;
         private float throttleInput;
-        [SerializeField] public CarManager _carManager;
+        [SerializeField] public CarControlDataLivePublisher _carControlPublisher;
 
         
         public override void Spawned()
         {
+
         }
 
         /// <summary>
@@ -22,9 +23,9 @@ namespace Assets.CryptoKartz.Scripts
         {
             if (!Runner.IsServer) return;
 
-            if(_carManager == null)
+            if(_carControlPublisher == null)
             {
-                Debug.Log("CarControllerLive: CarManager is null");
+                Debug.Log("CarControllerLive: CarControlPublisher is null");
                 return;
             }
 
@@ -37,7 +38,7 @@ namespace Assets.CryptoKartz.Scripts
             throttleInput = input.carControlValue.y;
             steeringInput = input.carControlValue.x;
 
-            _carManager.setControl(steeringInput, throttleInput);
+            _carControlPublisher.setControl(steeringInput, throttleInput);
 
         }
 

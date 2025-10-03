@@ -8,6 +8,8 @@ using M2MqttUnity;
 using System.Collections;
 using Newtonsoft.Json;
 using uPLibrary.Networking.M2Mqtt.Messages;
+using Assets.CryptoKartz.Scripts.Managers;
+using Assets.CryptoKartz.Scripts;
 
 namespace cryptokartz.Scripts.GameControllers
 {
@@ -157,26 +159,13 @@ namespace cryptokartz.Scripts.GameControllers
                 //Debug.Log("msg: " + msg);
                 if (topic.Contains("game/manager/spawnlivecar"))
                 {
-                    grlCarSpawn(_liveCarPrefab);
+                    grlCarSpawn(_liveCarPrefab, PlayerRef.None);
 
                 }
                 else if (topic.Contains("game/manager/spawnghostcar"))
                 {
-                    grlCarSpawn(_ghostCarPrefab);
+                    grlCarSpawn(_ghostCarPrefab, PlayerRef.None);
                 }
-                //else if (topic.Contains("game/manager/spawntrack"))
-                //{
-                //    int trackIndex = UnityEngine.Random.Range(0, _trackPrefabs.Count);
-                //    NetworkObject newTrack = _trackPrefabs[trackIndex];
-                //    Runner.Spawn(
-                //        newTrack,
-                //        Vector3.zero,
-                //        Quaternion.identity
-                //        );
-                //}
-
-
-
 
                 StoreMessage(msg);
             }
@@ -251,7 +240,7 @@ namespace cryptokartz.Scripts.GameControllers
                 Debug.Log($"TrackId: {TrackId.PropertyValue.ToString()}");
 
                 character = grlAvatarSpawn(_playerPrefab, player);
-                car = grlCarSpawn(GetCar(), player);
+                car = grlLiveCarSpawn(_liveCarPrefab, player);
 
                 _playerMap[player] = character;
                 _playerCarMap[player] = car;
@@ -280,11 +269,6 @@ namespace cryptokartz.Scripts.GameControllers
 
         }
 
-        private NetworkObject grlCarSpawn(NetworkObject _objPrefab)
-        {
-            return grlCarSpawn(_objPrefab, PlayerRef.None);
-        }
-
         private NetworkObject grlAvatarSpawn(NetworkObject _objPrefab, PlayerRef player)
         {
             return Runner.Spawn(
@@ -304,6 +288,45 @@ namespace cryptokartz.Scripts.GameControllers
                 Quaternion.identity,
                 inputAuthority: player
                 );
+        }
+
+        private NetworkObject grlLiveCarSpawn(NetworkObject _objPrefab, PlayerRef player)
+        {
+            return Runner.Spawn(
+                _objPrefab,
+                Vector3.zero,
+                Quaternion.identity,
+                inputAuthority: player,
+                InitializeLiveCarBeforeSpawn
+                );
+        }
+
+        private void InitializeLiveCarBeforeSpawn(NetworkRunner runner, NetworkObject obj)
+        {
+            //if(runner.IsClient)
+            //{
+            //    return;
+            //}
+
+            //var carPositionPublisher = obj.GetComponentInChildren<CarPositionLiveSubscriber>();
+            //var carInputManagerLive = obj.GetComponentInChildren<CarInputManagerLive>();
+            //var carControlDataLivePublisher = obj.GetComponentInChildren<CarControlDataLivePublisher>();
+
+            //var copyPositionPublisher = carPositionPublisher;
+            //var copyInputManagerLive = carInputManagerLive;
+            //var copyControlDataLivePublisher = carControlDataLivePublisher;
+
+            //copyPositionPublisher.enabled = true;
+            //copyInputManagerLive.enabled = true;
+            //copyControlDataLivePublisher.enabled = true;
+
+            //carPositionPublisher = copyPositionPublisher;
+            //carInputManagerLive = copyInputManagerLive;
+            //carControlDataLivePublisher = copyControlDataLivePublisher;
+
+
+
+
         }
 
         private void InitializeAvatarBeforeSpawn(NetworkRunner runner, NetworkObject obj)

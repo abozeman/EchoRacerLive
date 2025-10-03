@@ -11,7 +11,7 @@ using System.Runtime.ConstrainedExecution;
 namespace Assets.CryptoKartz.Scripts.Managers
 {
     [SimulationBehaviour(Modes = SimulationModes.Server)]
-    public class CarManager : M2MqttUnityClientNetwork, ISpawned
+    public class CarPositionLiveSubscriber : M2MqttUnityClientNetwork
     {
         private List<string> eventMessages = new List<string>();
         private bool firstTime = true;
@@ -19,10 +19,6 @@ namespace Assets.CryptoKartz.Scripts.Managers
         [SerializeField] private GameObject frontLeftWheel;
         [SerializeField] private GameObject rearRightWheel;
         [SerializeField] private GameObject rearLeftWheel;
-        //public Vector3 telemetryScale = new Vector3(1f, 1f, 1f);
-
-        private GameObject tmPro;
-        private GameObject lapNumText;
 
         //public GameObject warningCube;
         //public TTSSpeaker ttsSpeaker;
@@ -48,48 +44,6 @@ namespace Assets.CryptoKartz.Scripts.Managers
 
         [SerializeField] public bool righthanded = true;
 
-
-
-        public void setControl(float steering, float throttle)
-        {
-
-            try
-            {
-                //Debug.Log($"CarManager setControl (steering, throttle): ({steering}, {throttle})");
-                StartCoroutine(ControlPublish(steering, throttle));
-
-            }
-            catch (Exception e)
-            {
-                Debug.Log("CarManager setControl Exception: " + e);
-            }
-
-        }
-
-        IEnumerator ControlPublish(float steering, float throttle)
-        {
-            float steeringToSend = 0.0f;
-            float throttleToSend = 0.0f;
-
-            steeringToSend = steering;
-            throttleToSend = throttle;
-
-            try
-            {
-                client.Publish(string.Format("car.cc.{0}", vid), System.Text.Encoding.UTF8.GetBytes("{\"steering\": \"" + steeringToSend + "\",\"throttle\": \"" + throttleToSend + "\"}"));
-                //Debug.Log("ControlPublish: " + "{\"type\": \"" + type + "\",\"value\": \"" + value + "\"}");
-            }
-            catch (Exception e)
-            {
-
-                Debug.Log("ControlPublish Exception: " + e);
-                
-            }
-
-            yield return null;
-
-
-        }
 
 
         #region MQTT Client
@@ -181,29 +135,24 @@ namespace Assets.CryptoKartz.Scripts.Managers
         #endregion
 
         #endregion
-        
+
         public void Spawned()
         {
             if (Runner.IsServer)
             {
-                Connect();
                 Debug.Log("CarManager Spawned");
                 carNetworkTransform = GetComponent<NetworkTransform>();
-            } else
-            {
-                return;
             }
 
-            
-        }
 
+        }
 
         private void handleLapUpdate(LapData lapData)
         {
             //Debug.Log("lap: " + lapData.lap);
             //Debug.Log("laptimes: " + lapData.lapTimes);
 
-            foreach(string lapTime in lapData.lapTimes)
+            foreach (string lapTime in lapData.lapTimes)
             {
                 Debug.Log(lapTime);
             }
@@ -212,21 +161,16 @@ namespace Assets.CryptoKartz.Scripts.Managers
             //lapCube.GetComponent<CarEventManager>().cubeOn = true;
 
         }
-
-        
         private void handleTelemetryData(TelemetryData telemetryData)
         {
             //Get The Raw Measurement First
             var carPosition = new Vector3(telemetryData.posX, telemetryData.posY, telemetryData.posZ);
             var carRotation = new Quaternion(telemetryData.rotX, telemetryData.rotY, telemetryData.rotZ, telemetryData.rotW);
 
-
-
             //Apply Environment Offset
             carPosition += startLineOffset;
 
             //Change from Right Handed Coords to Left Handed Coords
-            //var carPosition = new Vector3(rawCarPosition.x * -1, rawCarPosition.y, rawCarPosition.z);
             var rotationFix = -1;
             if (righthanded)
             {
@@ -235,17 +179,12 @@ namespace Assets.CryptoKartz.Scripts.Managers
 
             }
 
-            //carRotation = new Quaternion(telemetryData.rotX, telemetryData.rotY * rotationFix, telemetryData.rotZ, telemetryData.rotW);
-
-
-
-
             if (firstTime)
             {
                 oldCarPosition = carPosition;
                 oldCarRotation = carRotation;
 
-                transform.SetLocalPositionAndRotation(carPosition,carRotation);
+                transform.SetLocalPositionAndRotation(carPosition, carRotation);
 
                 firstTime = false;
 
@@ -264,15 +203,13 @@ namespace Assets.CryptoKartz.Scripts.Managers
 
             }
 
-
-
             //Transform for Car
             var angles = transform.rotation.eulerAngles;
             angles.y += 180f;
             angles.z = 0.0f;
             angles.x = 0.0f;
             transform.rotation = Quaternion.Euler(angles.x, angles.y, angles.z);
-            
+
             Velocity = getVelocity(telemetryData.velX, telemetryData.velZ);
 
             //Transform Front Left and Right Wheels for steering
@@ -295,9 +232,6 @@ namespace Assets.CryptoKartz.Scripts.Managers
             frontLeftWheel.transform.localEulerAngles = flwAngles;
             rearRightWheel.transform.localEulerAngles = rrwAngles;
             rearLeftWheel.transform.localEulerAngles = rlwAngles;
-
-            tmPro.GetComponent<TMPro.TextMeshPro>().text = "vel: " + string.Format("{0:N2}", Velocity) + " m/s<br> Lap " + CurrentLap;
-            this.lapNumText.GetComponent<TextMesh>().text = CurrentLap.ToString();
 
         }
         private void handleVRaceStateData(VRaceStateData vRaceStateData)
@@ -393,21 +327,14 @@ namespace Assets.CryptoKartz.Scripts.Managers
         {
             base.Update(); // call ProcessMqttEvents()
 
-            /*if (CurrentGamePhase is GamePhase.InGame)
-            {*/
-                if (eventMessages.Count > 0)
+            if (eventMessages.Count > 0)
+            {
+                foreach (string msg in eventMessages)
                 {
-                    foreach (string msg in eventMessages)
-                    {
-                        ProcessMessage(msg);
-                    }
-                    eventMessages.Clear();
+                    ProcessMessage(msg);
                 }
-
-            //}
-
-
-
+                eventMessages.Clear();
+            }
 
         }
 
