@@ -26,6 +26,10 @@
 # Visual Studio cache directory
 .vs/
 
+# Avatar2 Sample Assests
+/Assets/Oculus/Avatar2_Sample/
+
+
 # Gradle cache directory
 .gradle/
 
