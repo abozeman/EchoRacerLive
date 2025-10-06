@@ -29,6 +29,9 @@
 # Avatar2 Sample Assests
 /Assets/Oculus/Avatar2_Sample/
 
+# Server Builds
+Builds/
+*.log
 
 # Gradle cache directory
 .gradle/
@@ -75,4 +78,4 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
-/Assets/Recordings/RecorderClip_005RecorderClip.mp4
+/Assets/Recordings/*

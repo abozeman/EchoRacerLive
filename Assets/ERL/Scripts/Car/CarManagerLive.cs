@@ -8,11 +8,11 @@ namespace Assets.CryptoKartz.Scripts
 
         public override void Spawned()
         {
-            if(Runner.IsServer)
+            if(!Runner.IsServer)
             {
-                GetComponentInChildren<CarInputManagerLive>().enabled = true;
-                GetComponentInChildren<CarPositionLiveSubscriber>().enabled = true;
-                GetComponentInChildren<CarControlDataLivePublisher>().enabled = true;
+                GetComponentInChildren<CarInputManagerLive>().enabled = false;
+                GetComponentInChildren<CarPositionLiveSubscriber>().enabled = false;
+                GetComponentInChildren<CarControlDataLivePublisher>().enabled = false;
             }
         }
 
