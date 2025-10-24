@@ -10,6 +10,8 @@ using Newtonsoft.Json;
 using uPLibrary.Networking.M2Mqtt.Messages;
 using Assets.CryptoKartz.Scripts.Managers;
 using Assets.CryptoKartz.Scripts;
+using Unity.Splines.Examples;
+using System.Runtime.ConstrainedExecution;
 
 namespace cryptokartz.Scripts.GameControllers
 {
@@ -21,8 +23,10 @@ namespace cryptokartz.Scripts.GameControllers
         [SerializeField] private NetworkObject _playerPrefab;
         [SerializeField] private NetworkObject _liveCarPrefab;
         [SerializeField] private NetworkObject _ghostCarPrefab;
+        [SerializeField] private NetworkObject _raceTrackPrefab;
+        [SerializeField] private NetworkObject _raceLevelsPrefab;
         [SerializeField] private List<NetworkObject> _carPrefabs = new List<NetworkObject>();
-        [SerializeField] private List<NetworkObject> _trackPrefabs = new List<NetworkObject>();
+        //[SerializeField] private List<NetworkObject> _ghostPrefabs = new List<NetworkObject>();
         private readonly Dictionary<PlayerRef, NetworkObject> _playerMap = new Dictionary<PlayerRef, NetworkObject>();
         private readonly Dictionary<PlayerRef, NetworkObject> _playerCarMap = new Dictionary<PlayerRef, NetworkObject>();
         private readonly Dictionary<string, NetworkObject> _playerCarTagMap = new Dictionary<string, NetworkObject>();
@@ -126,12 +130,12 @@ namespace cryptokartz.Scripts.GameControllers
 
         protected override void OnDisconnected()
         {
-            Debug.Log("Disconnected.");
+            Debug.Log(" Disconnected.");
         }
 
         protected override void OnConnectionLost()
         {
-            Debug.Log("CONNECTION LOST!");
+            Debug.Log("GameManager CONNECTION LOST!");
         }
         #endregion
 
@@ -157,21 +161,37 @@ namespace cryptokartz.Scripts.GameControllers
                 string msg = System.Text.Encoding.UTF8.GetString(message);
                 //string msg = "{"type": "1", "vid": "grlv0telemetry", "posX": "0.85", "posZ": "-0.018", "velX": "-0.0", "velZ": "-0.003", "rotW": "0.987", "rotX": "-0.117", "rotY": "0.014", "rotZ": "0.105", "strAngle": "0.0", "strThrottle": "0.0"}"
                 //Debug.Log("msg: " + msg);
-                if (topic.Contains("game/manager/spawnlivecar"))
+                if (topic.Contains("game/manager/livecar"))
                 {
-                    grlCarSpawn(_liveCarPrefab, PlayerRef.None);
+                    //agentConfig = new AgentConfig(msg);
+                    var car = grlLiveCarSpawn(_liveCarPrefab, PlayerRef.None);
+                    Debug.Log("LiveCarSpawned Success: " + car != null);
 
                 }
-                else if (topic.Contains("game/manager/spawnghostcar"))
+                else if (topic.Contains("game/manager/ghostcar"))
                 {
-                    grlCarSpawn(_ghostCarPrefab, PlayerRef.None);
+                    var car = grlCarSpawn(_ghostCarPrefab, PlayerRef.None);
+                    Debug.Log("GhostCarSpawned Success: " + car != null);
+
+                }
+                else if (topic.Contains("game/manager/platform"))
+                {
+                    var platform = grlRaceLevelsSpawn(_raceLevelsPrefab, PlayerRef.None);
+                    Debug.Log("PlatformSpawned Success: " + platform != null);
+
+                }
+                else if (topic.Contains("game/manager/racetrack"))
+                {
+                    var racetrack = grlRaceTrackSpawn(_raceTrackPrefab, PlayerRef.None);
+                    Debug.Log("RaceTrackSpawned Success: " + racetrack != null);
+
                 }
 
                 StoreMessage(msg);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                //Debug.Log("EXCEPTION: " + e.Message);
+                Debug.Log("GameManager Span EXCEPTION: " + e.Message);
             }
 
         }
@@ -301,31 +321,40 @@ namespace cryptokartz.Scripts.GameControllers
                 );
         }
 
+        private NetworkObject grlRaceLevelsSpawn(NetworkObject _objPrefab, PlayerRef player)
+        {
+            return Runner.Spawn(
+                _objPrefab,
+                Vector3.zero,
+                Quaternion.identity,
+                inputAuthority: player,
+                InitializeRaceLevelsBeforeSpawn
+                );
+        }
+
+        private NetworkObject grlRaceTrackSpawn(NetworkObject _objPrefab, PlayerRef player)
+        {
+            return Runner.Spawn(
+                _objPrefab,
+                Vector3.zero,
+                Quaternion.identity,
+                inputAuthority: player,
+                InitializeRaceTracksBeforeSpawn
+                );
+        }
+
         private void InitializeLiveCarBeforeSpawn(NetworkRunner runner, NetworkObject obj)
         {
-            //if(runner.IsClient)
-            //{
-            //    return;
-            //}
+            
+        }
 
-            //var carPositionPublisher = obj.GetComponentInChildren<CarPositionLiveSubscriber>();
-            //var carInputManagerLive = obj.GetComponentInChildren<CarInputManagerLive>();
-            //var carControlDataLivePublisher = obj.GetComponentInChildren<CarControlDataLivePublisher>();
+        private void InitializeRaceLevelsBeforeSpawn(NetworkRunner runner, NetworkObject obj)
+        {
 
-            //var copyPositionPublisher = carPositionPublisher;
-            //var copyInputManagerLive = carInputManagerLive;
-            //var copyControlDataLivePublisher = carControlDataLivePublisher;
+        }
 
-            //copyPositionPublisher.enabled = true;
-            //copyInputManagerLive.enabled = true;
-            //copyControlDataLivePublisher.enabled = true;
-
-            //carPositionPublisher = copyPositionPublisher;
-            //carInputManagerLive = copyInputManagerLive;
-            //carControlDataLivePublisher = copyControlDataLivePublisher;
-
-
-
+        private void InitializeRaceTracksBeforeSpawn(NetworkRunner runner, NetworkObject obj)
+        {
 
         }
 

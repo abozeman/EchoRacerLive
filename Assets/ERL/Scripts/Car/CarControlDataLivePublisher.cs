@@ -127,7 +127,7 @@ namespace Assets.CryptoKartz.Scripts.Managers
 
         protected override void OnConnectionLost()
         {
-            Debug.Log("CONNECTION LOST!");
+            Debug.Log("CarControlDataLivePublisher CONNECTION LOST!");
             UnsubscribeTopics();
         }
         #endregion

@@ -1,0 +1,11 @@
+{
+    "asset": "bcccb49a60f4e2b4b8b2bf189744a97d",
+    "fileName": "0199ef03-c066-781e-9676-e2e89e12a20d_Preview.png",
+    "prompt": "frame material for a structure",
+    "negativePrompt": "",
+    "model": "575ecf67-4425-4939-97b9-5e138b8ee234",
+    "modelName": "Unity Texture2D",
+    "customSeed": 1103776096,
+    "w3CTraceId": "fb35424bb42d379f56a9a41d86062a91",
+    "refinementMode": "Generation"
+}

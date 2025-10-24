@@ -85,7 +85,7 @@ namespace Assets.CryptoKartz.Scripts.Managers
 
         protected override void OnConnectionLost()
         {
-            Debug.Log("CONNECTION LOST!");
+            Debug.Log("Server Manager CONNECTION LOST!");
         }
         #endregion
 
@@ -93,13 +93,11 @@ namespace Assets.CryptoKartz.Scripts.Managers
         protected override void SubscribeTopics()
         {
             client.Subscribe(new string[] { string.Format("server/manager/*", clientId) }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
-            client.Subscribe(new string[] { string.Format("client/manager/*", clientId) }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
         }
 
         protected override void UnsubscribeTopics()
         {
             client.Unsubscribe(new string[] { string.Format("server/manager/{0}", clientId) });
-            client.Unsubscribe(new string[] { string.Format("client/manager/{0}", clientId) });
         }
 
         #endregion
@@ -117,12 +115,6 @@ namespace Assets.CryptoKartz.Scripts.Managers
                 {
                     var result = await StartServer(msg);
                     Debug.Log("StartServer Result: " + result);
-                }
-
-                if (topic.Contains("client.manager"))
-                {
-                    var result = await StartClient();
-                    Debug.Log("StartClient Result: " + result);
                 }
 
                 StoreMessage(msg);

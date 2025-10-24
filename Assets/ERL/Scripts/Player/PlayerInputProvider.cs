@@ -21,6 +21,7 @@ namespace Assets.CryptoKartz.Scripts.Player
         public InputActionReference ERLLeftStick;
         public InputActionReference ERLRightStick;
         private Vector2 carControlValue;
+        
 
         public override void Spawned()
         {
@@ -32,14 +33,21 @@ namespace Assets.CryptoKartz.Scripts.Player
 
             carControlValue = ERLLeftStick.action.ReadValue<Vector2>();
             carControlValue = ERLRightStick.action.ReadValue<Vector2>();
-            Debug.Log($"echoCarControlValue (x,y): ({carControlValue.x},{carControlValue.y}) ");
+
+            if(carControlValue.x != 0 || carControlValue.y != 0) Debug.Log($"echoCarControlValue (x,y): ({carControlValue.x},{carControlValue.y}) ");
 
             carInput.carControlValue = carControlValue;
         }
 
         void INetworkRunnerCallbacks.OnInput(NetworkRunner runner, NetworkInput input)
         {
-            if(Object.HasInputAuthority)
+
+            var pRef = Object.Runner.LocalPlayer;
+            var authority = Object.HasStateAuthority;
+
+            Debug.Log($"PlayerRef / HasInputAuthority: {pRef} ({authority}) ");
+
+            if (Object.HasInputAuthority)
             {
                 input.Set(carInput);
 
