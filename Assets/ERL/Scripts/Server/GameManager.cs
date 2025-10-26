@@ -29,6 +29,8 @@ namespace cryptokartz.Scripts.GameControllers
         //[SerializeField] private List<NetworkObject> _ghostPrefabs = new List<NetworkObject>();
         private readonly Dictionary<PlayerRef, NetworkObject> _playerMap = new Dictionary<PlayerRef, NetworkObject>();
         private readonly Dictionary<PlayerRef, NetworkObject> _playerCarMap = new Dictionary<PlayerRef, NetworkObject>();
+        private readonly Dictionary<PlayerRef, NetworkObject> _ghostCarMap = new Dictionary<PlayerRef, NetworkObject>();
+        private readonly Dictionary<PlayerRef, NetworkObject> _liveCarMap = new Dictionary<PlayerRef, NetworkObject>();
         private readonly Dictionary<string, NetworkObject> _playerCarTagMap = new Dictionary<string, NetworkObject>();
         private Dictionary<PlayerRef, PlayerDataNetwork> _playerDataMap = new Dictionary<PlayerRef, PlayerDataNetwork>();
         private List<string> eventMessages = new List<string>();

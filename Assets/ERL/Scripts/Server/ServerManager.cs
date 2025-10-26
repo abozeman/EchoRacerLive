@@ -158,13 +158,13 @@ namespace Assets.CryptoKartz.Scripts.Managers
         {
             await Task.Yield();
             Application.targetFrameRate = 30;
-            AgentConfig agentConfig = new AgentConfig();
+            StartGameConfig agentConfig = new StartGameConfig();
             runnerServer = GetRunner("Server");
 
             DedicatedServerConfig config = new DedicatedServerConfig();
             try
             {
-                agentConfig = new AgentConfig(msg);
+                agentConfig = new StartGameConfig(msg);
                 Debug.Log($"AgentConfig {agentConfig.ToString()}");
             }
             catch (Exception e)

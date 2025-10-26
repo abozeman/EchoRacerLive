@@ -51,7 +51,7 @@ namespace uPLibrary.Networking.M2Mqtt.Exceptions
     public enum MqttClientErrorCode
     {
         /// <summary>
-        /// Will error (topic, message or QoS level)
+        /// Will error (topic, message or QoS RacePlatformLevel)
         /// </summary>
         WillWrong = 1,
 
@@ -71,7 +71,7 @@ namespace uPLibrary.Networking.M2Mqtt.Exceptions
         TopicLength,
 
         /// <summary>
-        /// QoS level not allowed
+        /// QoS RacePlatformLevel not allowed
         /// </summary>
         QosNotAllowed,
 

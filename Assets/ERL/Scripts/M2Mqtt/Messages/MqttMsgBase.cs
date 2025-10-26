@@ -80,7 +80,7 @@ namespace uPLibrary.Networking.M2Mqtt.Messages
         public const byte QOS_LEVEL_AT_LEAST_ONCE = 0x01;
         public const byte QOS_LEVEL_EXACTLY_ONCE = 0x02;
 
-        // SUBSCRIBE QoS level granted failure [v3.1.1]
+        // SUBSCRIBE QoS RacePlatformLevel granted failure [v3.1.1]
         public const byte QOS_LEVEL_GRANTED_FAILURE = 0x80;
 
         internal const ushort MAX_TOPIC_LENGTH = 65535;
@@ -110,7 +110,7 @@ namespace uPLibrary.Networking.M2Mqtt.Messages
         }
 
         /// <summary>
-        /// Quality of Service level
+        /// Quality of Service RacePlatformLevel
         /// </summary>
         public byte QosLevel
         {
@@ -142,7 +142,7 @@ namespace uPLibrary.Networking.M2Mqtt.Messages
         protected byte type;
         // duplicate delivery
         protected bool dupFlag;
-        // quality of service level
+        // quality of service RacePlatformLevel
         protected byte qosLevel;
         // retain flag
         protected bool retain;

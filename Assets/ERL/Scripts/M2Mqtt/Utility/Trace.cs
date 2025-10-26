@@ -54,7 +54,7 @@ namespace uPLibrary.Networking.M2Mqtt.Utility
         /// <summary>
         /// Writes the line.
         /// </summary>
-        /// <param name="level">The level.</param>
+        /// <param name="level">The RacePlatformLevel.</param>
         /// <param name="format">The format.</param>
         public static void WriteLine(TraceLevel level, string format)
         {
@@ -67,7 +67,7 @@ namespace uPLibrary.Networking.M2Mqtt.Utility
         /// <summary>
         /// Writes the line.
         /// </summary>
-        /// <param name="level">The level.</param>
+        /// <param name="level">The RacePlatformLevel.</param>
         /// <param name="format">The format.</param>
         /// <param name="arg1">The arg1.</param>
         public static void WriteLine(TraceLevel level, string format, object arg1)
@@ -81,7 +81,7 @@ namespace uPLibrary.Networking.M2Mqtt.Utility
         /// <summary>
         /// Writes the line.
         /// </summary>
-        /// <param name="level">The level.</param>
+        /// <param name="level">The RacePlatformLevel.</param>
         /// <param name="format">The format.</param>
         /// <param name="arg1">The arg1.</param>
         /// <param name="arg2">The arg2.</param>
@@ -96,7 +96,7 @@ namespace uPLibrary.Networking.M2Mqtt.Utility
         /// <summary>
         /// Writes the line.
         /// </summary>
-        /// <param name="level">The level.</param>
+        /// <param name="level">The RacePlatformLevel.</param>
         /// <param name="format">The format.</param>
         /// <param name="arg1">The arg1.</param>
         /// <param name="arg2">The arg2.</param>

@@ -57,7 +57,7 @@ namespace uPLibrary.Networking.M2Mqtt.Messages
         }
 
         /// <summary>
-        /// Quality of Service level
+        /// Quality of Service RacePlatformLevel
         /// </summary>
         public byte QosLevel
         {
@@ -82,7 +82,7 @@ namespace uPLibrary.Networking.M2Mqtt.Messages
         private byte[] message;
         // duplicate delivery
         private bool dupFlag;
-        // quality of service level
+        // quality of service RacePlatformLevel
         private byte qosLevel;
         // retain flag
         private bool retain;       
@@ -93,7 +93,7 @@ namespace uPLibrary.Networking.M2Mqtt.Messages
         /// <param name="topic">Message topic</param>
         /// <param name="message">Message data</param>
         /// <param name="dupFlag">Duplicate delivery flag</param>
-        /// <param name="qosLevel">Quality of Service level</param>
+        /// <param name="qosLevel">Quality of Service RacePlatformLevel</param>
         /// <param name="retain">Retain flag</param>
         public MqttMsgPublishEventArgs(string topic,
             byte[] message,
