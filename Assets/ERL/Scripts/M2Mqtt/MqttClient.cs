@@ -215,7 +215,7 @@ namespace uPLibrary.Networking.M2Mqtt
         public bool WillFlag { get; private set; }
 
         /// <summary>
-        /// Will QOS level
+        /// Will QOS RacePlatformLevel
         /// </summary>
         public byte WillQosLevel { get; private set; }
 
@@ -525,7 +525,7 @@ namespace uPLibrary.Networking.M2Mqtt
         /// <param name="username">Username</param>
         /// <param name="password">Password</param>
         /// <param name="willRetain">Will retain flag</param>
-        /// <param name="willQosLevel">Will QOS level</param>
+        /// <param name="willQosLevel">Will QOS RacePlatformLevel</param>
         /// <param name="willFlag">Will flag</param>
         /// <param name="willTopic">Will topic</param>
         /// <param name="willMessage">Will message</param>
@@ -1166,7 +1166,7 @@ namespace uPLibrary.Networking.M2Mqtt
                 // set a default state
                 MqttMsgState state = MqttMsgState.QueuedQos0;
 
-                // based on QoS level, the messages flow between broker and client changes
+                // based on QoS RacePlatformLevel, the messages flow between broker and client changes
                 switch (msg.QosLevel)
                 {
                     // QoS Level 0
@@ -1221,7 +1221,7 @@ namespace uPLibrary.Networking.M2Mqtt
                         // PUBLISH message
                         if (msg.Type == MqttMsgBase.MQTT_MSG_PUBLISH_TYPE)
                         {
-                            // to publish and QoS level 1 or 2
+                            // to publish and QoS RacePlatformLevel 1 or 2
                             if ((msgContext.Flow == MqttMsgFlow.ToPublish) &&
                                 ((msg.QosLevel == MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE) ||
                                  (msg.QosLevel == MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE)))
@@ -1229,7 +1229,7 @@ namespace uPLibrary.Networking.M2Mqtt
                                 if (this.session != null)
                                     this.session.InflightMessages.Add(msgContext.Key, msgContext);
                             }
-                            // to acknowledge and QoS level 2
+                            // to acknowledge and QoS RacePlatformLevel 2
                             else if ((msgContext.Flow == MqttMsgFlow.ToAcknowledge) &&
                                      (msg.QosLevel == MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE))
                             {

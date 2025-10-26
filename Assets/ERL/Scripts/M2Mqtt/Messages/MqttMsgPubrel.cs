@@ -119,7 +119,7 @@ namespace uPLibrary.Networking.M2Mqtt.Messages
             {
                 // only 3.1.0
 
-                // read QoS level from fixed header (would be QoS Level 1)
+                // read QoS RacePlatformLevel from fixed header (would be QoS Level 1)
                 msg.qosLevel = (byte)((fixedHeaderFirstByte & QOS_LEVEL_MASK) >> QOS_LEVEL_OFFSET);
                 // read DUP flag from fixed header
                 msg.dupFlag = (((fixedHeaderFirstByte & DUP_FLAG_MASK) >> DUP_FLAG_OFFSET) == 0x01);

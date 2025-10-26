@@ -76,7 +76,7 @@ namespace uPLibrary.Networking.M2Mqtt.Messages
         /// <param name="topic">Message topic</param>
         /// <param name="message">Message data</param>
         /// <param name="dupFlag">Duplicate flag</param>
-        /// <param name="qosLevel">Quality of Service level</param>
+        /// <param name="qosLevel">Quality of Service RacePlatformLevel</param>
         /// <param name="retain">Retain flag</param>
         public MqttMsgPublish(string topic,
             byte[] message,
@@ -117,7 +117,7 @@ namespace uPLibrary.Networking.M2Mqtt.Messages
             if ((this.topic.Length < MIN_TOPIC_LENGTH) || (this.topic.Length > MAX_TOPIC_LENGTH))
                 throw new MqttClientException(MqttClientErrorCode.TopicLength);
 
-            // check wrong QoS level (both bits can't be set 1)
+            // check wrong QoS RacePlatformLevel (both bits can't be set 1)
             if (this.qosLevel > QOS_LEVEL_EXACTLY_ONCE)
                 throw new MqttClientException(MqttClientErrorCode.QosNotAllowed);
 
@@ -126,7 +126,7 @@ namespace uPLibrary.Networking.M2Mqtt.Messages
             // topic name
             varHeaderSize += topicUtf8.Length + 2;
 
-            // message id is valid only with QOS level 1 or QOS level 2
+            // message id is valid only with QOS RacePlatformLevel 1 or QOS RacePlatformLevel 2
             if ((this.qosLevel == QOS_LEVEL_AT_LEAST_ONCE) || 
                 (this.qosLevel == QOS_LEVEL_EXACTLY_ONCE))
             {
@@ -171,7 +171,7 @@ namespace uPLibrary.Networking.M2Mqtt.Messages
             Array.Copy(topicUtf8, 0, buffer, index, topicUtf8.Length);
             index += topicUtf8.Length;
 
-            // message id is valid only with QOS level 1 or QOS level 2
+            // message id is valid only with QOS RacePlatformLevel 1 or QOS RacePlatformLevel 2
             if ((this.qosLevel == QOS_LEVEL_AT_LEAST_ONCE) ||
                 (this.qosLevel == QOS_LEVEL_EXACTLY_ONCE))
             {
@@ -223,9 +223,9 @@ namespace uPLibrary.Networking.M2Mqtt.Messages
             index += topicUtf8Length;
             msg.topic = new String(Encoding.UTF8.GetChars(topicUtf8));
 
-            // read QoS level from fixed header
+            // read QoS RacePlatformLevel from fixed header
             msg.qosLevel = (byte)((fixedHeaderFirstByte & QOS_LEVEL_MASK) >> QOS_LEVEL_OFFSET);
-            // check wrong QoS level (both bits can't be set 1)
+            // check wrong QoS RacePlatformLevel (both bits can't be set 1)
             if (msg.qosLevel > QOS_LEVEL_EXACTLY_ONCE)
                 throw new MqttClientException(MqttClientErrorCode.QosNotAllowed);
             // read DUP flag from fixed header
@@ -233,7 +233,7 @@ namespace uPLibrary.Networking.M2Mqtt.Messages
             // read retain flag from fixed header
             msg.retain = (((fixedHeaderFirstByte & RETAIN_FLAG_MASK) >> RETAIN_FLAG_OFFSET) == 0x01);
             
-            // message id is valid only with QOS level 1 or QOS level 2
+            // message id is valid only with QOS RacePlatformLevel 1 or QOS RacePlatformLevel 2
             if ((msg.qosLevel == QOS_LEVEL_AT_LEAST_ONCE) ||
                 (msg.qosLevel == QOS_LEVEL_EXACTLY_ONCE))
             {

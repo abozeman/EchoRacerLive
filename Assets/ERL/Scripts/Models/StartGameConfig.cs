@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AgentConfig
+public class StartGameConfig
 {
         public string sessionName { get; set; }
         public string customLobby { get; set; }
@@ -13,14 +13,14 @@ public class AgentConfig
         public string level { get; set; }
         public string trackId { get; set; }
 
-    public AgentConfig() { }
+    public StartGameConfig() { }
 
-    public AgentConfig(string jsonString)
+    public StartGameConfig(string jsonString)
     {
         try
         {
 
-            var obj = JsonConvert.DeserializeObject<AgentConfig>(jsonString);
+            var obj = JsonConvert.DeserializeObject<StartGameConfig>(jsonString);
             this.sessionName = obj.sessionName;
             this.customLobby = obj.customLobby;
             this.port = obj.port;
@@ -31,7 +31,7 @@ public class AgentConfig
             Debug.Log($"AgentConfig obj {obj.ToString()}");
 
 
-            //"{\r\n  \"sessionName\": \"OpenXR\",\r\n  \"customLobby\": \"GRLMROrlandoDev\",\r\n  \"port\": 27045,\r\n  \"raceType\": 300,\r\n  \"level\": \"1\",\r\n  \"trackId\": \"ovaltrack\"\r\n}"
+            //"{\r\n  \"sessionName\": \"OpenXR\",\r\n  \"customLobby\": \"GRLMROrlandoDev\",\r\n  \"port\": 27045,\r\n  \"raceType\": 300,\r\n  \"RacePlatformLevel\": \"1\",\r\n  \"trackId\": \"ovaltrack\"\r\n}"
 
 
 

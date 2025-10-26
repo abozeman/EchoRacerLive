@@ -112,7 +112,7 @@ namespace uPLibrary.Networking.M2Mqtt.Messages
         }
 
         /// <summary>
-        /// Will QOS level
+        /// Will QOS RacePlatformLevel
         /// </summary>
         public byte WillQosLevel
         {
@@ -193,7 +193,7 @@ namespace uPLibrary.Networking.M2Mqtt.Messages
         private string clientId;
         // will retain flag
         protected bool willRetain;
-        // will quality of service level
+        // will quality of service RacePlatformLevel
         protected byte willQosLevel;
         // will flag
         private bool willFlag;
@@ -234,7 +234,7 @@ namespace uPLibrary.Networking.M2Mqtt.Messages
         /// <param name="username">Username</param>
         /// <param name="password">Password</param>
         /// <param name="willRetain">Will retain flag</param>
-        /// <param name="willQosLevel">Will QOS level</param>
+        /// <param name="willQosLevel">Will QOS RacePlatformLevel</param>
         /// <param name="willFlag">Will flag</param>
         /// <param name="willTopic">Will topic</param>
         /// <param name="willMessage">Will message</param>
@@ -450,7 +450,7 @@ namespace uPLibrary.Networking.M2Mqtt.Messages
             {
                 varHeaderSize += (PROTOCOL_NAME_LEN_SIZE + PROTOCOL_NAME_V3_1_1_SIZE);
             }
-            // protocol level field size
+            // protocol RacePlatformLevel field size
             varHeaderSize += PROTOCOL_VERSION_SIZE;
             // connect flags field size
             varHeaderSize += CONNECT_FLAGS_SIZE;
@@ -517,7 +517,7 @@ namespace uPLibrary.Networking.M2Mqtt.Messages
             connectFlags |= (usernameUtf8 != null) ? (byte)(1 << USERNAME_FLAG_OFFSET) : (byte)0x00;
             connectFlags |= (passwordUtf8 != null) ? (byte)(1 << PASSWORD_FLAG_OFFSET) : (byte)0x00;
             connectFlags |= (this.willRetain) ? (byte)(1 << WILL_RETAIN_FLAG_OFFSET) : (byte)0x00;
-            // only if will flag is set, we have to use will QoS level (otherwise is MUST be 0)
+            // only if will flag is set, we have to use will QoS RacePlatformLevel (otherwise is MUST be 0)
             if (this.willFlag)
                 connectFlags |= (byte)(this.willQosLevel << WILL_QOS_FLAG_OFFSET);
             connectFlags |= (this.willFlag) ? (byte)(1 << WILL_FLAG_OFFSET) : (byte)0x00;

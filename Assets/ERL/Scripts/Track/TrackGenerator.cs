@@ -1,6 +1,10 @@
 using UnityEngine;
 using Fusion;
 using RestClient.Scripts.Clients;
+using Meta.XR.MRUtilityKit;
+using Poly2Tri;
+using System.Collections.Generic;
+using System.Linq;
 
 public class TrackGenerator : NetworkBehaviour, ITrackAPI
 {
@@ -16,6 +20,8 @@ public class TrackGenerator : NetworkBehaviour, ITrackAPI
     private LineRenderer m_interiorLineRenderer;
     private LineRenderer m_startLineRenderer;
     private TrackDefinition m_trackDefinition;
+
+    private Mesh TrackMesh { get; set;  }
 
 
     [Networked]
@@ -274,10 +280,105 @@ public class TrackGenerator : NetworkBehaviour, ITrackAPI
             Debug.Log(e.Message);
         }
 
+        
 
         trackIsRendered = true;
 
     }
 
     
+    public List<DelaunayTriangle> TriangulatePolygons()
+    {
+
+        List<PolygonPoint> outerPolygonPoints = new List<PolygonPoint>();
+        List<PolygonPoint> innerPolygonPoints = new List<PolygonPoint>();
+
+        // The data type 'Polygon' is part of the external library.
+        // The library handles converting the bounded area into a list of triangles.
+        Vector2[] exteriorCoords = new Vector2[ExteriorCoordinatesLength];
+        ExteriorCoordinates.CopyTo(exteriorCoords);
+        List<Vector2> outerPoints2D = new List<Vector2>();
+        outerPoints2D.AddRange(exteriorCoords);
+
+        Vector2[] interiorCoords = new Vector2[InteriorCoordinatesLength];
+        InteriorCoordinates.CopyTo(interiorCoords);
+        List<Vector2> innerPoints2D = new List<Vector2>();
+        innerPoints2D.AddRange(interiorCoords);
+
+        foreach(var outerPont in outerPoints2D)
+        {
+            outerPolygonPoints.Add(new PolygonPoint(outerPont.x, outerPont.y));
+        }
+
+        foreach (var innerPont in innerPoints2D)
+        {
+            innerPolygonPoints.Add(new PolygonPoint(innerPont.x, innerPont.y));
+        }
+
+        Polygon trackPolygon = new Polygon(outerPolygonPoints);
+        Polygon holePolygon = new Polygon(innerPolygonPoints);
+        trackPolygon.AddHole(holePolygon);
+
+        List<DelaunayTriangle> triangles = (List<DelaunayTriangle>)trackPolygon.Triangles;
+
+        return triangles;
+        
+    }
+
+    public void GenerateMesh(List<DelaunayTriangle> triangles)
+    {
+        TrackMesh = new Mesh();
+        List<Vector3> vertices3D = new List<Vector3>();
+        List<int> triangleIndices = new List<int>();
+        Dictionary<Vector2, int> vertexMap = new Dictionary<Vector2, int>();
+        int vertexCount = 0;
+
+        // 1. Collect Vertices and Triangle Indices
+        foreach (var tri in triangles)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                Vector2 p2D = new Vector2((float)tri.Points[i].X, (float)(tri.Points[i].Y)); // Get the 2D point from the triangle
+
+                if (!vertexMap.ContainsKey(p2D))
+                {
+                    // New vertex: map 2D point to an index and store the 3D position
+                    vertexMap.Add(p2D, vertexCount);
+
+                    // Convert 2D back to 3D (assuming XZ plane)
+                    vertices3D.Add(new Vector3(p2D.x, 0f, p2D.y));
+                    vertexCount++;
+                }
+
+                // Add the index to the triangle list
+                triangleIndices.Add(vertexMap[p2D]);
+            }
+        }
+
+        // 2. Create the Unity Mesh
+
+        TrackMesh.vertices = vertices3D.ToArray();
+        TrackMesh.triangles = triangleIndices.ToArray();
+
+        // 3. Calculate Other Mesh Data
+        TrackMesh.RecalculateNormals(); // Essential for lighting
+        TrackMesh.RecalculateBounds();  // Essential for culling
+
+        // For simple flat meshes, UVs can be projected from the 2D coordinates
+        Vector2[] uvs = new Vector2[vertices3D.Count];
+        for (int i = 0; i < vertices3D.Count; i++)
+        {
+            // Simple UV mapping based on XZ plane coordinates
+            uvs[i] = new Vector2(vertices3D[i].x, vertices3D[i].z);
+        }
+        TrackMesh.uv = uvs;
+
+        // 4. Apply the Mesh to the GameObject
+        GetComponent<MeshFilter>().mesh = TrackMesh;
+        // You'll also need a MeshRenderer with a material to see it.
+
+    }
+
+
+
 }

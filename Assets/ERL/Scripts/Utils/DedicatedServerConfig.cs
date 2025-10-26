@@ -18,7 +18,7 @@ namespace Assets.CryptoKartz.Scripts.Utils
 
         public DedicatedServerConfig() { }
 
-        public static DedicatedServerConfig AgentResolve(AgentConfig agentConfig)
+        public static DedicatedServerConfig AgentResolve(StartGameConfig agentConfig)
         {
 
             var config = new DedicatedServerConfig();
@@ -27,7 +27,7 @@ namespace Assets.CryptoKartz.Scripts.Utils
             config.Port = Convert.ToUInt16(agentConfig.port);
 
             config.SessionProperties.Add("type", agentConfig.raceType);
-            config.SessionProperties.Add("level", agentConfig.level);
+            config.SessionProperties.Add("RacePlatformLevel", agentConfig.level);
             config.SessionProperties.Add("trackid", agentConfig.trackId);
 
             config.SceneId = (int)SceneDefs.ERLRace;
