@@ -61,7 +61,7 @@ MonoBehaviour:
       - rid: 2040904755881967620
       - rid: 2040904755881967621
       - rid: 2040904755881967622
-      - rid: 2040904815377383424
+      - rid: 7743661970379243520
     m_RuntimeSettings:
       m_List:
       - rid: 7512586045471588352
@@ -74,7 +74,6 @@ MonoBehaviour:
       - rid: 7512586045471588370
       - rid: 7512586045471588371
       - rid: 7512586045471588372
-      - rid: 2040904755881967617
       - rid: 2040904755881967621
       - rid: 2040904755881967622
   m_AssetVersion: 8
@@ -331,10 +330,6 @@ MonoBehaviour:
           - {r: 0.5, g: 0, b: 0.5, a: 1}
           - {r: 0.5, g: 0.5, b: 0.5, a: 1}
           - {r: 0, g: 0, b: 1, a: 1}
-    - rid: 2040904815377383424
-      type: {class: RenderingDebuggerRuntimeResources, ns: UnityEngine.Rendering, asm: Unity.RenderPipelines.Core.Runtime}
-      data:
-        m_version: 0
     - rid: 7512586045471588352
       type: {class: RenderGraphSettings, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
       data:
@@ -404,3 +399,7 @@ MonoBehaviour:
         m_version: 0
         m_EnableCompilationCaching: 1
         m_EnableValidityChecks: 1
+    - rid: 7743661970379243520
+      type: {class: RenderingDebuggerRuntimeResources, ns: UnityEngine.Rendering, asm: Unity.RenderPipelines.Core.Runtime}
+      data:
+        m_version: 0

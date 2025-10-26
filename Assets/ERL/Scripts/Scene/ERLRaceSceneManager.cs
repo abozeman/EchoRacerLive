@@ -15,11 +15,15 @@ namespace Assets.CryptoKartz.Scripts
                 var _playerCount = Runner.SessionInfo.PlayerCount - 1;
                 Debug.Log($"Player Count {_playerCount}");
                 _xrOrigin.SetActive(true);
+                
+
+            }
+            else
+            {
                 GetComponentInChildren<CarInputManagerLive>().enabled = false;
                 GetComponentInChildren<CarPositionLiveSubscriber>().enabled = false;
                 GetComponentInChildren<CarControlDataLivePublisher>().enabled = false;
-
-            } 
+            }
         }
 
     }
