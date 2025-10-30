@@ -376,7 +376,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1960c234c82edc47a4b0337275c5cb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseUrl: https://grlv2api-b7bbbndwhkgghjah.canadacentral-01.azurewebsites.net
+  baseUrl: http://192.168.2.49:8001
 --- !u!1 &7921685855535203042
 GameObject:
   m_ObjectHideFlags: 0

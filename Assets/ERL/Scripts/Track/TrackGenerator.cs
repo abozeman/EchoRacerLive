@@ -147,15 +147,7 @@ public class TrackGenerator : NetworkBehaviour, ITrackAPI
 
         if (Runner.IsServer)
         {
-            if (TrackId == null) return;
-            try
-            {
-                TrackId = Runner.SessionInfo.Properties["trackid"];
-            }
-            catch (System.Exception e)
-            {
-                Debug.Log($"TrackId not found in Runner.SessionInfo.Properties[\"trackid\"] : {e.Message}");
-            }
+            if(string.IsNullOrEmpty(TrackId)) return;
 
             RestClientTrackGenerator.RegisterGetTrackDefinitionCompleteListener(this);
 

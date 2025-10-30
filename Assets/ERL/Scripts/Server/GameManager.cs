@@ -39,6 +39,7 @@ namespace cryptokartz.Scripts.GameControllers
         private int _playerId;
         private int _playerCount;
         private PlayerRef _player;
+        //private string TrackId;
 
 
         public SessionProperty TrackId { get; private set; }
@@ -184,8 +185,12 @@ namespace cryptokartz.Scripts.GameControllers
                 }
                 else if (topic.Contains("game/manager/racetrack"))
                 {
-                    var racetrack = grlRaceTrackSpawn(_raceTrackPrefab, PlayerRef.None);
-                    Debug.Log("RaceTrackSpawned Success: " + racetrack != null);
+                    CreateRaceTrackConfig raceTrackConfig = new CreateRaceTrackConfig(msg);
+                    int rtLevel = int.Parse(raceTrackConfig.RacePlatformLevel);
+                    string rtId = raceTrackConfig.trackId;
+                    var racetrack = grlRaceTrackSpawn(_raceTrackPrefab, rtLevel, rtId, PlayerRef.None);
+                    Debug.Log($"RaceTrackSpawned with TrackId: {rtId} at Level: {rtLevel}");
+
 
                 }
 
@@ -334,11 +339,31 @@ namespace cryptokartz.Scripts.GameControllers
                 );
         }
 
-        private NetworkObject grlRaceTrackSpawn(NetworkObject _objPrefab, PlayerRef player)
+        private NetworkObject grlRaceTrackSpawn(NetworkObject _objPrefab, int trackLevel, string trackId,  PlayerRef player)
         {
+            Vector3 spawnPosition = new Vector3(0, 0, 0);
+            TrackId = trackId;
+
+            switch (trackLevel)
+            {
+                case 1:
+                    spawnPosition = new Vector3(0, 0.016f, 0); ;
+                    break;
+                case 2:
+                    spawnPosition = new Vector3(0, 0.366f, 0); ;
+                    break;
+                case 3:
+                    spawnPosition = new Vector3(0, 0.716f, 0); ;
+                    break;
+                case 4:
+                    spawnPosition = new Vector3(0, 1.07f, 0); ;
+                    break;
+            }
+
+
             return Runner.Spawn(
                 _objPrefab,
-                Vector3.zero,
+                spawnPosition,
                 Quaternion.identity,
                 inputAuthority: player,
                 InitializeRaceTracksBeforeSpawn
@@ -357,7 +382,13 @@ namespace cryptokartz.Scripts.GameControllers
 
         private void InitializeRaceTracksBeforeSpawn(NetworkRunner runner, NetworkObject obj)
         {
+            var objTrackGenerator = obj.GetComponentInChildren<TrackGenerator>();
+            var copy = objTrackGenerator;
 
+            copy.TrackId = TrackId;
+            objTrackGenerator = copy;
+
+            Debug.Log($"TrackId set to: {objTrackGenerator.TrackId}");
         }
 
         private void InitializeAvatarBeforeSpawn(NetworkRunner runner, NetworkObject obj)

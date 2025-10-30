@@ -11,7 +11,7 @@ namespace RestClient.Scripts.Clients
     {
         [SerializeField]
         //private string baseUrl = "https://grlv2api-b7bbbndwhkgghjah.canadacentral-01.azurewebsites.net";
-        private string baseUrl = "https://localhost:8001";
+        private string baseUrl = "http://192.168.2.49:8001/getTrackDefinition";
         public TrackDefinition TrackDef { get; private set; }
         //public TrackDefinitionNetworked TrackDefNet { get; private set; }
 
