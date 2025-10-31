@@ -8,10 +8,6 @@ using M2MqttUnity;
 using System.Collections;
 using Newtonsoft.Json;
 using uPLibrary.Networking.M2Mqtt.Messages;
-using Assets.CryptoKartz.Scripts.Managers;
-using Assets.CryptoKartz.Scripts;
-using Unity.Splines.Examples;
-using System.Runtime.ConstrainedExecution;
 
 namespace cryptokartz.Scripts.GameControllers
 {
@@ -29,8 +25,9 @@ namespace cryptokartz.Scripts.GameControllers
         //[SerializeField] private List<NetworkObject> _ghostPrefabs = new List<NetworkObject>();
         private readonly Dictionary<PlayerRef, NetworkObject> _playerMap = new Dictionary<PlayerRef, NetworkObject>();
         private readonly Dictionary<PlayerRef, NetworkObject> _playerCarMap = new Dictionary<PlayerRef, NetworkObject>();
-        private readonly Dictionary<PlayerRef, NetworkObject> _ghostCarMap = new Dictionary<PlayerRef, NetworkObject>();
-        private readonly Dictionary<PlayerRef, NetworkObject> _liveCarMap = new Dictionary<PlayerRef, NetworkObject>();
+        private readonly Dictionary<int, NetworkObject> _ghostCarMap = new Dictionary<int, NetworkObject>();
+        private readonly Dictionary<int, NetworkObject> _liveCarMap = new Dictionary<int, NetworkObject>();
+        private readonly Dictionary<int, NetworkObject> _trackMap = new Dictionary<int, NetworkObject>();
         private readonly Dictionary<string, NetworkObject> _playerCarTagMap = new Dictionary<string, NetworkObject>();
         private Dictionary<PlayerRef, PlayerDataNetwork> _playerDataMap = new Dictionary<PlayerRef, PlayerDataNetwork>();
         private List<string> eventMessages = new List<string>();
@@ -167,14 +164,25 @@ namespace cryptokartz.Scripts.GameControllers
                 if (topic.Contains("game/manager/livecar"))
                 {
                     //agentConfig = new AgentConfig(msg);
-                    var car = grlLiveCarSpawn(_liveCarPrefab, PlayerRef.None);
-                    Debug.Log("LiveCarSpawned Success: " + car != null);
+                    var player = PlayerRef.None;
+                    CreateCarConfig carConfig = new CreateCarConfig(msg);
+                    int rtLevel = int.Parse(carConfig.RacePlatformLevel);
+                    var car = grlLiveCarSpawn(_liveCarPrefab, rtLevel, player);
+                    _liveCarMap[rtLevel] = car;
+                    Debug.Log($"LiveCarSpawned at Level: {rtLevel}");
+
 
                 }
                 else if (topic.Contains("game/manager/ghostcar"))
                 {
-                    var car = grlCarSpawn(_ghostCarPrefab, PlayerRef.None);
-                    Debug.Log("GhostCarSpawned Success: " + car != null);
+                    var player = PlayerRef.None;
+                    CreateCarConfig carConfig = new CreateCarConfig(msg);
+                    int rtLevel = int.Parse(carConfig.RacePlatformLevel);
+                    var car = grlCarSpawn(_ghostCarPrefab, rtLevel, player);
+                    _ghostCarMap[rtLevel] = car;
+                    Debug.Log($"GhostCarSpawned at Level: {rtLevel}");
+
+
 
                 }
                 else if (topic.Contains("game/manager/platform"))
@@ -189,6 +197,7 @@ namespace cryptokartz.Scripts.GameControllers
                     int rtLevel = int.Parse(raceTrackConfig.RacePlatformLevel);
                     string rtId = raceTrackConfig.trackId;
                     var racetrack = grlRaceTrackSpawn(_raceTrackPrefab, rtLevel, rtId, PlayerRef.None);
+                    _trackMap[rtLevel] = racetrack;
                     Debug.Log($"RaceTrackSpawned with TrackId: {rtId} at Level: {rtLevel}");
 
 
@@ -267,10 +276,11 @@ namespace cryptokartz.Scripts.GameControllers
                 Debug.Log($"TrackId: {TrackId.PropertyValue.ToString()}");
 
                 character = grlAvatarSpawn(_playerPrefab, player);
-                car = grlLiveCarSpawn(_liveCarPrefab, player);
+                car = grlLiveCarSpawn(_liveCarPrefab, 4, player);
 
                 _playerMap[player] = character;
                 _playerCarMap[player] = car;
+                _liveCarMap[4] = car;
                 runner.SetPlayerObject(player, character);
 
 
@@ -307,21 +317,29 @@ namespace cryptokartz.Scripts.GameControllers
                 );
         }
 
-        private NetworkObject grlCarSpawn(NetworkObject _objPrefab, PlayerRef player)
+        private NetworkObject grlCarSpawn(NetworkObject _objPrefab, int level, PlayerRef player)
         {
+            var spawnPosition = GetRaceLevelVector(level);
+
+
             return Runner.Spawn(
                 _objPrefab,
-                Vector3.zero,
+                spawnPosition,
                 Quaternion.identity,
-                inputAuthority: player
+                inputAuthority: player,
+                InitializeLiveCarBeforeSpawn
                 );
         }
 
-        private NetworkObject grlLiveCarSpawn(NetworkObject _objPrefab, PlayerRef player)
+        private NetworkObject grlLiveCarSpawn(NetworkObject _objPrefab, int level, PlayerRef player)
         {
+
+            var spawnPosition = GetRaceLevelVector(level);
+
+
             return Runner.Spawn(
                 _objPrefab,
-                Vector3.zero,
+                spawnPosition,
                 Quaternion.identity,
                 inputAuthority: player,
                 InitializeLiveCarBeforeSpawn
@@ -344,22 +362,7 @@ namespace cryptokartz.Scripts.GameControllers
             Vector3 spawnPosition = new Vector3(0, 0, 0);
             TrackId = trackId;
 
-            switch (trackLevel)
-            {
-                case 1:
-                    spawnPosition = new Vector3(0, 0.016f, 0); ;
-                    break;
-                case 2:
-                    spawnPosition = new Vector3(0, 0.366f, 0); ;
-                    break;
-                case 3:
-                    spawnPosition = new Vector3(0, 0.716f, 0); ;
-                    break;
-                case 4:
-                    spawnPosition = new Vector3(0, 1.07f, 0); ;
-                    break;
-            }
-
+            spawnPosition = GetRaceLevelVector(trackLevel);
 
             return Runner.Spawn(
                 _objPrefab,
@@ -420,6 +423,27 @@ namespace cryptokartz.Scripts.GameControllers
 
 
 
+        }
+
+        private Vector3 GetRaceLevelVector(int level)
+        {
+            Vector3 levelVector = Vector3.zero;
+            switch (level)
+            {
+                case 1:
+                    levelVector = new Vector3(0, 0.016f, 0); ;
+                    break;
+                case 2:
+                    levelVector = new Vector3(0, 0.366f, 0); ;
+                    break;
+                case 3:
+                    levelVector = new Vector3(0, 0.716f, 0); ;
+                    break;
+                case 4:
+                    levelVector = new Vector3(0, 1.07f, 0); ;
+                    break;
+            }
+            return levelVector;
         }
 
         void INetworkRunnerCallbacks.OnPlayerLeft(NetworkRunner runner, PlayerRef player)

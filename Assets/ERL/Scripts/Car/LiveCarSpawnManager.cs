@@ -11,7 +11,7 @@ public class LiveCarSpawnManager : NetworkBehaviour
     {
         if (!Runner.IsServer)
         {
-            GetComponent<CarInputManagerLive>().enabled = false;
+            GetComponent<CarInputManagerLive>().enabled = true;
             GetComponent<CarPositionLiveSubscriber>().enabled = false;
             GetComponent<CarControlDataLivePublisher>().enabled = false;
         }

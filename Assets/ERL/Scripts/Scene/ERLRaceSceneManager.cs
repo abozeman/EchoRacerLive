@@ -18,12 +18,7 @@ namespace Assets.CryptoKartz.Scripts
                 
 
             }
-            else
-            {
-                GetComponentInChildren<CarInputManagerLive>().enabled = false;
-                GetComponentInChildren<CarPositionLiveSubscriber>().enabled = false;
-                GetComponentInChildren<CarControlDataLivePublisher>().enabled = false;
-            }
+         
         }
 
     }
