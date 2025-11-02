@@ -44,8 +44,6 @@ namespace Assets.CryptoKartz.Scripts.Managers
 
         [SerializeField] public bool righthanded = true;
 
-
-
         #region MQTT Client
 
         #region Broker Settings
@@ -149,16 +147,16 @@ namespace Assets.CryptoKartz.Scripts.Managers
 
         private void handleLapUpdate(LapData lapData)
         {
-            //Debug.Log("lap: " + lapData.lap);
-            //Debug.Log("laptimes: " + lapData.lapTimes);
+            Debug.Log("lap: " + lapData.lap);
+            Debug.Log("laptimes: " + lapData.lapTimes);
 
             foreach (string lapTime in lapData.lapTimes)
             {
                 Debug.Log(lapTime);
             }
 
-            var lapCube = transform.Find("LapCube");
-            //lapCube.GetComponent<CarEventManager>().cubeOn = true;
+            var lapUpdateObject = transform.Find("LapUpdateObject");
+            lapUpdateObject.GetComponent<CarEventManager>().EventActive = true;
 
         }
         private void handleTelemetryData(TelemetryData telemetryData)
@@ -241,10 +239,17 @@ namespace Assets.CryptoKartz.Scripts.Managers
             IsOffTrack = vRaceStateData.offtrackFlag;
             IsOverlapping = vRaceStateData.overlapFlag;
 
-            var warningCube = transform.Find("WarningCube");
-            var warningPosition = new Vector3(vRaceStateData.px * -1, startLineOffset.y, vRaceStateData.pz);
-            warningCube.transform.SetPositionAndRotation(warningPosition, warningCube.transform.rotation);
-            //warningCube.GetComponent<CarEventManager>().cubeOn = true;
+            if(IsOffTrack)
+            {
+                var offtrackObject = transform.Find("OffTrackObject");
+                offtrackObject.GetComponent<CarEventManager>().EventActive = true;
+            }
+
+            if (IsOverlapping)
+            {
+                var overlapObject = transform.Find("OverlapObject");
+                overlapObject.GetComponent<CarEventManager>().EventActive = true;
+            }
         }
 
         private Vector3 spinWheels(Vector3 wheelAngles)

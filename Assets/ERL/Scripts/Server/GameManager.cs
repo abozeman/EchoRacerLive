@@ -121,6 +121,7 @@ namespace cryptokartz.Scripts.GameControllers
         {
             base.OnConnected();
             Debug.Log("Connected to broker on " + brokerAddress + "\n");
+            SubscribeTopics();
         }
 
         protected override void OnConnectionFailed(string errorMessage)
@@ -193,6 +194,8 @@ namespace cryptokartz.Scripts.GameControllers
                 }
                 else if (topic.Contains("game/manager/racetrack"))
                 {
+                    Debug.Log($"RaceTrackSpawned with msg: {msg}");
+
                     CreateRaceTrackConfig raceTrackConfig = new CreateRaceTrackConfig(msg);
                     int rtLevel = int.Parse(raceTrackConfig.RacePlatformLevel);
                     string rtId = raceTrackConfig.trackId;
