@@ -12,7 +12,7 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
+  companyName: HGBHoldings
   productName: MRCore
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
@@ -148,9 +148,6 @@ PlayerSettings:
   - {fileID: 11400000, guid: f8a442de0c8906f4d9c00184993fc289, type: 2}
   - {fileID: 11400000, guid: 10c89a39884e0bc4192136fd988bb83d, type: 2}
   - {fileID: -944628639613478452, guid: 670a02f41ed70d54b8dfdb5d2418ae0f, type: 3}
-  - {fileID: 11400000, guid: 56a98106ce58f09459a9990007b50acb, type: 2}
-  - {fileID: 1717971415945194200, guid: 2462f957eee75f940a3393fd6f039795, type: 2}
-  - {fileID: 2752711641744252779, guid: 136958f90a130274b8b70a31eed352fb, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -180,7 +177,7 @@ PlayerSettings:
     iPhone: 0
     tvOS: 0
   overrideDefaultApplicationIdentifier: 1
-  AndroidBundleVersionCode: 1
+  AndroidBundleVersionCode: 4
   AndroidMinSdkVersion: 32
   AndroidTargetSdkVersion: 32
   AndroidPreferredInstallLocation: 0
@@ -274,8 +271,8 @@ PlayerSettings:
   AndroidTargetArchitectures: 2
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: '{dedicated}: .keys/EchoRacerDebugKey.keystore'
-  AndroidKeyaliasName: echoracer
+  AndroidKeystoreName: C:/Users/antho/keys/ERLDebug.keystore
+  AndroidKeyaliasName: erldebug
   AndroidEnableArmv9SecurityFeatures: 0
   AndroidEnableArm64MTE: 0
   AndroidBuildApkPerCpuArchitecture: 0

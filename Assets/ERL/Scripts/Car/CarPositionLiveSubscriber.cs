@@ -155,8 +155,8 @@ namespace Assets.CryptoKartz.Scripts.Managers
                 Debug.Log(lapTime);
             }
 
-            var lapUpdateObject = transform.Find("LapUpdateObject");
-            lapUpdateObject.GetComponent<CarEventManager>().EventActive = true;
+            //var lapUpdateObject = transform.Find("LapUpdateObject");
+            //lapUpdateObject.GetComponent<CarEventManager>().EventActive = true;
 
         }
         private void handleTelemetryData(TelemetryData telemetryData)

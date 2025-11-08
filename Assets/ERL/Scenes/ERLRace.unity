@@ -359,6 +359,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2453134715190683036, guid: cd9ab0dc68253e142a210d080b1f9f46, type: 3}
+      propertyPath: m_Height
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2453134715190683036, guid: cd9ab0dc68253e142a210d080b1f9f46, type: 3}
+      propertyPath: m_Center.y
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 2559970211364095251, guid: cd9ab0dc68253e142a210d080b1f9f46, type: 3}
       propertyPath: m_ObjectSpawner
       value: 
@@ -410,6 +418,18 @@ PrefabInstance:
     - target: {fileID: 6036090577939191661, guid: cd9ab0dc68253e142a210d080b1f9f46, type: 3}
       propertyPath: m_OnARBoundingBoxFeatureDebugVisualizationChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7219139812601341610, guid: cd9ab0dc68253e142a210d080b1f9f46, type: 3}
+      propertyPath: m_CameraYOffset
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7219139812601341610, guid: cd9ab0dc68253e142a210d080b1f9f46, type: 3}
+      propertyPath: m_RequestedTrackingOriginMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8391439746937971285, guid: cd9ab0dc68253e142a210d080b1f9f46, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 8446958732279094284, guid: cd9ab0dc68253e142a210d080b1f9f46, type: 3}
       propertyPath: m_LocalPosition.x

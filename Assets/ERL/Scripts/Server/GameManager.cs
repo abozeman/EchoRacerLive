@@ -210,7 +210,7 @@ namespace cryptokartz.Scripts.GameControllers
             }
             catch (Exception e)
             {
-                Debug.Log("GameManager Span EXCEPTION: " + e.Message);
+                Debug.Log("GameManager Spawn EXCEPTION: " + e.Message);
             }
 
         }
@@ -311,9 +311,11 @@ namespace cryptokartz.Scripts.GameControllers
 
         private NetworkObject grlAvatarSpawn(NetworkObject _objPrefab, PlayerRef player)
         {
+            var spawnPosition = GetRaceLevelVector(4);
+
             return Runner.Spawn(
                 _objPrefab,
-                Vector3.zero,
+                spawnPosition,
                 Quaternion.identity,
                 inputAuthority: player,
                 InitializeAvatarBeforeSpawn
@@ -322,7 +324,7 @@ namespace cryptokartz.Scripts.GameControllers
 
         private NetworkObject grlCarSpawn(NetworkObject _objPrefab, int level, PlayerRef player)
         {
-            var spawnPosition = GetRaceLevelVector(level);
+            var spawnPosition = GetRaceLevelVector(4);
 
 
             return Runner.Spawn(
@@ -337,7 +339,8 @@ namespace cryptokartz.Scripts.GameControllers
         private NetworkObject grlLiveCarSpawn(NetworkObject _objPrefab, int level, PlayerRef player)
         {
 
-            var spawnPosition = GetRaceLevelVector(level);
+            var spawnPosition = GetRaceLevelVector(4);
+            Debug.Log($"LiveCar Vector3 set to: {spawnPosition}");
 
 
             return Runner.Spawn(
@@ -362,10 +365,13 @@ namespace cryptokartz.Scripts.GameControllers
 
         private NetworkObject grlRaceTrackSpawn(NetworkObject _objPrefab, int trackLevel, string trackId,  PlayerRef player)
         {
-            Vector3 spawnPosition = new Vector3(0, 0, 0);
+            Vector3 spawnPosition = new Vector3(0, 1.07f, 0);
             TrackId = trackId;
 
-            spawnPosition = GetRaceLevelVector(trackLevel);
+            spawnPosition = GetRaceLevelVector(4);
+            Debug.Log($"RaceTrack Vector3 set to: {spawnPosition}");
+
+
 
             return Runner.Spawn(
                 _objPrefab,
@@ -399,38 +405,35 @@ namespace cryptokartz.Scripts.GameControllers
 
         private void InitializeAvatarBeforeSpawn(NetworkRunner runner, NetworkObject obj)
         {
-            var objPlayerData = obj.GetComponentInChildren<PlayerDataNetwork>();
-            var copy = objPlayerData;
+            //var objPlayerData = obj.GetComponentInChildren<PlayerDataNetwork>();
+            //var copy = objPlayerData;
 
-            copy.PlayerId = _player.PlayerId;
-            copy.PlayerTag = $"Player{_playerCount}";
+            //copy.PlayerId = _player.PlayerId;
+            //copy.PlayerTag = $"Player{_playerCount}";
 
-            copy.AvatarIndex = UnityEngine.Random.Range(1, 31);
-
-
-
-            if (_playerCount == 1)
-            {
-                copy.PlayerTag = "Handler";
-            }
-            else
-            {
-                copy.PlayerTag = $"Player{_playerCount}";
-            }
-
-            objPlayerData = copy;
-
-            _playerDataMap[_player] = objPlayerData;
-
-            Debug.Log($"PlayerId for Player: {objPlayerData.PlayerId}");
+            //copy.AvatarIndex = UnityEngine.Random.Range(1, 31);
 
 
 
+            //if (_playerCount == 1)
+            //{
+            //    copy.PlayerTag = "Handler";
+            //}
+            //else
+            //{
+            //    copy.PlayerTag = $"Player{_playerCount}";
+            //}
+
+            //objPlayerData = copy;
+
+            //_playerDataMap[_player] = objPlayerData;
+
+            //Debug.Log($"PlayerId for Player: {objPlayerData.PlayerId}");
         }
 
         private Vector3 GetRaceLevelVector(int level)
         {
-            Vector3 levelVector = Vector3.zero;
+            Vector3 levelVector = new Vector3(0, 1.07f, 0);
             switch (level)
             {
                 case 1:
@@ -443,6 +446,9 @@ namespace cryptokartz.Scripts.GameControllers
                     levelVector = new Vector3(0, 0.716f, 0); ;
                     break;
                 case 4:
+                    levelVector = new Vector3(0, 1.07f, 0); ;
+                    break;
+                default:
                     levelVector = new Vector3(0, 1.07f, 0); ;
                     break;
             }
