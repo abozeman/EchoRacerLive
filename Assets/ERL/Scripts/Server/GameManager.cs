@@ -20,7 +20,7 @@ namespace cryptokartz.Scripts.GameControllers
         [SerializeField] private NetworkObject _liveCarPrefab;
         [SerializeField] private NetworkObject _ghostCarPrefab;
         [SerializeField] private NetworkObject _raceTrackPrefab;
-        [SerializeField] private NetworkObject _raceLevelsPrefab;
+        [SerializeField] private NetworkObject _racePlatformPrefab;
         [SerializeField] private List<NetworkObject> _carPrefabs = new List<NetworkObject>();
         //[SerializeField] private List<NetworkObject> _ghostPrefabs = new List<NetworkObject>();
         private readonly Dictionary<PlayerRef, NetworkObject> _playerMap = new Dictionary<PlayerRef, NetworkObject>();
@@ -188,7 +188,7 @@ namespace cryptokartz.Scripts.GameControllers
                 }
                 else if (topic.Contains("game/manager/platform"))
                 {
-                    var platform = grlRaceLevelsSpawn(_raceLevelsPrefab, PlayerRef.None);
+                    var platform = grlRaceLevelsSpawn(_racePlatformPrefab, PlayerRef.None);
                     Debug.Log("PlatformSpawned Success: " + platform != null);
 
                 }
@@ -311,7 +311,7 @@ namespace cryptokartz.Scripts.GameControllers
 
         private NetworkObject grlAvatarSpawn(NetworkObject _objPrefab, PlayerRef player)
         {
-            var spawnPosition = GetRaceLevelVector(4);
+            var spawnPosition = GetRacePlatformLevelVector(4);
 
             return Runner.Spawn(
                 _objPrefab,
@@ -324,7 +324,7 @@ namespace cryptokartz.Scripts.GameControllers
 
         private NetworkObject grlCarSpawn(NetworkObject _objPrefab, int level, PlayerRef player)
         {
-            var spawnPosition = GetRaceLevelVector(4);
+            var spawnPosition = GetRacePlatformLevelVector(4);
 
 
             return Runner.Spawn(
@@ -339,7 +339,7 @@ namespace cryptokartz.Scripts.GameControllers
         private NetworkObject grlLiveCarSpawn(NetworkObject _objPrefab, int level, PlayerRef player)
         {
 
-            var spawnPosition = GetRaceLevelVector(4);
+            var spawnPosition = GetRacePlatformLevelVector(4);
             Debug.Log($"LiveCar Vector3 set to: {spawnPosition}");
 
 
@@ -368,7 +368,7 @@ namespace cryptokartz.Scripts.GameControllers
             Vector3 spawnPosition = new Vector3(0, 1.07f, 0);
             TrackId = trackId;
 
-            spawnPosition = GetRaceLevelVector(4);
+            spawnPosition = GetRacePlatformLevelVector(4);
             Debug.Log($"RaceTrack Vector3 set to: {spawnPosition}");
 
 
@@ -431,7 +431,7 @@ namespace cryptokartz.Scripts.GameControllers
             //Debug.Log($"PlayerId for Player: {objPlayerData.PlayerId}");
         }
 
-        private Vector3 GetRaceLevelVector(int level)
+        private Vector3 GetRacePlatformLevelVector(int level)
         {
             Vector3 levelVector = new Vector3(0, 1.07f, 0);
             switch (level)

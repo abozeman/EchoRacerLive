@@ -364,8 +364,16 @@ PrefabInstance:
       value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 2453134715190683036, guid: cd9ab0dc68253e142a210d080b1f9f46, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2453134715190683036, guid: cd9ab0dc68253e142a210d080b1f9f46, type: 3}
       propertyPath: m_Center.y
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2453134715190683036, guid: cd9ab0dc68253e142a210d080b1f9f46, type: 3}
+      propertyPath: m_StepOffset
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 2559970211364095251, guid: cd9ab0dc68253e142a210d080b1f9f46, type: 3}
       propertyPath: m_ObjectSpawner
@@ -421,7 +429,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7219139812601341610, guid: cd9ab0dc68253e142a210d080b1f9f46, type: 3}
       propertyPath: m_CameraYOffset
-      value: 0.1
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 7219139812601341610, guid: cd9ab0dc68253e142a210d080b1f9f46, type: 3}
       propertyPath: m_RequestedTrackingOriginMode
