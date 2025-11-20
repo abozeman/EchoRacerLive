@@ -368,7 +368,7 @@ namespace cryptokartz.Scripts.GameControllers
             Vector3 spawnPosition = new Vector3(0, 1.07f, 0);
             TrackId = trackId;
 
-            spawnPosition = GetRacePlatformLevelVector(4);
+            spawnPosition = GetRacePlatformLevelVector(trackLevel);
             Debug.Log($"RaceTrack Vector3 set to: {spawnPosition}");
 
 
