@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/ERL/Scenes/ERLClientStartup.unity
     guid: 7bdb05ed1c9fbf1419bd7b6f79d74b0f
   - enabled: 1
-    path: Assets/ERL/Scenes/ERLRace.unity
+    path: Assets/ERL/Scenes/Legacy/ERLRace_old.unity
     guid: 705400ef589a2f149aefdba17852e13f
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 6c1cfcac26dda1248ac70e1f4bd681cb, type: 2}
