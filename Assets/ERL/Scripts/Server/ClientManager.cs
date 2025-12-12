@@ -5,6 +5,7 @@ using Meta.WitAi;
 using Oculus.Platform;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -29,14 +30,15 @@ namespace Assets.CryptoKartz.Scripts.Managers
 
         public async Task<StartGameResult> StartClient()
         {
+            await Awaitable.WaitForSecondsAsync(30f);
             int loadERLTask = await LoadERLAsync();
-            StartGameResult startERLTask = await StartSessionAsync("ERLRace", SceneRef.FromIndex((int)SceneDefs.ERLRace));
+            StartGameResult startERLTask = await StartSessionAsync("ERLGame", SceneRef.FromIndex((int)SceneDefs.ERLGame));
             return startERLTask;
         }
 
         public async Task<int> LoadERLAsync() // assume we return an int from this long running operation 
         {
-            await SceneManager.LoadSceneAsync((int)SceneDefs.ERLRace, LoadSceneMode.Single);
+            await SceneManager.LoadSceneAsync((int)SceneDefs.ERLGame, LoadSceneMode.Single);
             return 1;
         }
 

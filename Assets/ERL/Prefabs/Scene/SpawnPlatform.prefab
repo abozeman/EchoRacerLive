@@ -9,8 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4918073831033867738}
-  - component: {fileID: 3881490702731922959}
-  - component: {fileID: 7476310494689715255}
+  - component: {fileID: 769469016496801357}
   m_Layer: 0
   m_Name: SpawnPlatform
   m_TagString: Untagged
@@ -33,25 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3881490702731922959
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1839196041484098827}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b023183069df224080314a560e6e1ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Meta.XR.BuildingBlocks::Meta.XR.BuildingBlocks.BuildingBlock
-  blockId: 93762ef0-9738-45f4-bb87-bdb9a0acb994
-  instanceId: a4e8b40d-0936-4c91-abed-9ca213593fad
-  version: 1
-  installationRoutineCheckpoint:
-    _installationRoutineId: 
-    _installationVariants: []
---- !u!114 &7476310494689715255
+--- !u!114 &769469016496801357
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -62,10 +43,10 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d14e43228043c04db9e374568cb89a9, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: meta.xr.mrutilitykit::Meta.XR.MRUtilityKit.FindSpawnPositions
   SpawnOnStart: 1
-  SpawnObject: {fileID: 4654142842105399653, guid: 16cea12f0ee39734ba935300778fdd38, type: 3}
-  SpawnAmount: 1
+  SpawnObject: {fileID: 4491199942441847400, guid: 115cf5a38097b7746a108c3da973980b, type: 3}
+  SpawnAmount: 3
   MaxIterations: 1000
   SpawnLocations: 3
   Labels: 1
@@ -73,5 +54,5 @@ MonoBehaviour:
   OverrideBounds: 0.5
   LayerMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 4294967295
   SurfaceClearanceDistance: 0.5

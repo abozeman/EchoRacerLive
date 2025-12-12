@@ -200,7 +200,7 @@ namespace Assets.CryptoKartz.Scripts.Managers
 
         public async Task<StartGameResult> StartClient()
         {
-            StartGameResult startERLTask = await StartSessionAsync("ERLRace", SceneRef.FromIndex((int)SceneDefs.ERLRace));
+            StartGameResult startERLTask = await StartSessionAsync("ERLRace", SceneRef.FromIndex((int)SceneDefs.ERLGame));
             return startERLTask;
         }
 

@@ -30,7 +30,7 @@ namespace Assets.CryptoKartz.Scripts.Utils
             config.SessionProperties.Add("RacePlatformLevel", agentConfig.level);
             config.SessionProperties.Add("trackid", agentConfig.trackId);
 
-            config.SceneId = (int)SceneDefs.ERLRace;
+            config.SceneId = (int)SceneDefs.ERLGame;
 
             return config;
         }

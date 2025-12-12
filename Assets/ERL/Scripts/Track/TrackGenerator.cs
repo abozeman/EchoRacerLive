@@ -5,6 +5,7 @@ using Meta.XR.MRUtilityKit;
 using Poly2Tri;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 public class TrackGenerator : NetworkBehaviour, ITrackAPI
 {
@@ -15,14 +16,17 @@ public class TrackGenerator : NetworkBehaviour, ITrackAPI
 
     [Networked, Capacity(20)]
     public string TrackId { get; set; }
+
+    [Networked]
+    public int LevelId { get; set; }
+
     public bool trackIsRendered { get; set; } = false;
     private LineRenderer m_exteriorLineRenderer;
     private LineRenderer m_interiorLineRenderer;
     private LineRenderer m_startLineRenderer;
     private TrackDefinition m_trackDefinition;
 
-    private Mesh TrackMesh { get; set;  }
-
+    private Mesh TrackMesh { get; set; }
 
     [Networked]
     [Capacity(60)]
@@ -41,6 +45,8 @@ public class TrackGenerator : NetworkBehaviour, ITrackAPI
     public float renderDelay { get; private set; } = .1f;
 
     private ChangeDetector _changes;
+
+    public bool isReparented = false;
 
     public void OnTrackDefinitionUpdate(TrackDefinition m_trackDefinition)
     {
@@ -147,8 +153,8 @@ public class TrackGenerator : NetworkBehaviour, ITrackAPI
 
         if (Runner.IsServer)
         {
-            if(string.IsNullOrEmpty(TrackId)) return;
 
+            if (string.IsNullOrEmpty(TrackId)) return;
             RestClientTrackGenerator.RegisterGetTrackDefinitionCompleteListener(this);
 
             try
@@ -161,8 +167,41 @@ public class TrackGenerator : NetworkBehaviour, ITrackAPI
                 Debug.Log(e.Message);
             }
         }
-
+       
     }
+
+    //public void Reparent()
+    //{
+
+    //    GameObject _trackLevelObject = GameObject.Find("RaceLevelsV2");
+
+
+    //    if (!Runner.IsServer)
+    //    {
+    //        switch (LevelId)
+    //        {
+    //            case 1:
+    //                _trackLevelObject = GameObject.Find("RaceLevelsV2/Level_1");
+    //                break;
+    //            case 2:
+    //                _trackLevelObject = GameObject.Find("RaceLevelsV2/Level_2");
+    //                break;
+    //            case 3:
+    //                _trackLevelObject = GameObject.Find("RaceLevelsV2/Level_3");
+    //                break;
+    //            case 4:
+    //                _trackLevelObject = GameObject.Find("RaceLevelsV2/Level_4");
+    //                break;
+    //            default:
+    //                break;
+    //        }
+
+    //        transform.SetParent(_trackLevelObject.transform);
+    //        transform.SetLocalPositionAndRotation(new Vector3(0,0,0.003f), transform.rotation);
+    //        transform.localScale = new Vector3(.05f, .05f, .05f);
+
+    //    }
+    //}
 
     /// <summary>
     /// Fixed update network.
@@ -195,7 +234,7 @@ public class TrackGenerator : NetworkBehaviour, ITrackAPI
 
             }
         }
-
+       
     }
 
     public override void Render()
@@ -272,13 +311,12 @@ public class TrackGenerator : NetworkBehaviour, ITrackAPI
             Debug.Log(e.Message);
         }
 
-        
 
         trackIsRendered = true;
 
     }
 
-    
+
     public List<DelaunayTriangle> TriangulatePolygons()
     {
 
@@ -297,7 +335,7 @@ public class TrackGenerator : NetworkBehaviour, ITrackAPI
         List<Vector2> innerPoints2D = new List<Vector2>();
         innerPoints2D.AddRange(interiorCoords);
 
-        foreach(var outerPont in outerPoints2D)
+        foreach (var outerPont in outerPoints2D)
         {
             outerPolygonPoints.Add(new PolygonPoint(outerPont.x, outerPont.y));
         }
@@ -314,7 +352,7 @@ public class TrackGenerator : NetworkBehaviour, ITrackAPI
         List<DelaunayTriangle> triangles = (List<DelaunayTriangle>)trackPolygon.Triangles;
 
         return triangles;
-        
+
     }
 
     public void GenerateMesh(List<DelaunayTriangle> triangles)

@@ -25,6 +25,7 @@ namespace cryptokartz.Scripts.GameControllers
         //[SerializeField] private List<NetworkObject> _ghostPrefabs = new List<NetworkObject>();
         private readonly Dictionary<PlayerRef, NetworkObject> _playerMap = new Dictionary<PlayerRef, NetworkObject>();
         private readonly Dictionary<PlayerRef, NetworkObject> _playerCarMap = new Dictionary<PlayerRef, NetworkObject>();
+        private readonly Dictionary<PlayerRef, NetworkObject> _platformMap = new Dictionary<PlayerRef, NetworkObject>();
         private readonly Dictionary<int, NetworkObject> _ghostCarMap = new Dictionary<int, NetworkObject>();
         private readonly Dictionary<int, NetworkObject> _liveCarMap = new Dictionary<int, NetworkObject>();
         private readonly Dictionary<int, NetworkObject> _trackMap = new Dictionary<int, NetworkObject>();
@@ -36,7 +37,7 @@ namespace cryptokartz.Scripts.GameControllers
         private int _playerId;
         private int _playerCount;
         private PlayerRef _player;
-        //private string TrackId;
+        private int TrackLevelId;
 
 
         public SessionProperty TrackId { get; private set; }
@@ -186,12 +187,12 @@ namespace cryptokartz.Scripts.GameControllers
 
 
                 }
-                else if (topic.Contains("game/manager/platform"))
-                {
-                    var platform = grlRaceLevelsSpawn(_racePlatformPrefab, PlayerRef.None);
-                    Debug.Log("PlatformSpawned Success: " + platform != null);
+                //else if (topic.Contains("game/manager/platform"))
+                //{
+                //    var platform = grlRaceLevelsSpawn(_racePlatformPrefab, PlayerRef.None);
+                //    Debug.Log("PlatformSpawned Success: " + platform != null);
 
-                }
+                //}
                 else if (topic.Contains("game/manager/racetrack"))
                 {
                     Debug.Log($"RaceTrackSpawned with msg: {msg}");
@@ -272,20 +273,16 @@ namespace cryptokartz.Scripts.GameControllers
 
                 if (_playerCount == 0) return;
 
-                NetworkObject character, car;
+                NetworkObject character;
 
                 Debug.Log($"_playerId: {_playerId}");
                 Debug.Log($"PlayerCount: {_playerCount}");
                 Debug.Log($"TrackId: {TrackId.PropertyValue.ToString()}");
 
                 character = grlAvatarSpawn(_playerPrefab, player);
-                car = grlLiveCarSpawn(_liveCarPrefab, 4, player);
 
                 _playerMap[player] = character;
-                _playerCarMap[player] = car;
-                _liveCarMap[4] = car;
                 runner.SetPlayerObject(player, character);
-
 
                 Log.Info($"Spawn for Player: {player}");
 
@@ -365,13 +362,9 @@ namespace cryptokartz.Scripts.GameControllers
 
         private NetworkObject grlRaceTrackSpawn(NetworkObject _objPrefab, int trackLevel, string trackId,  PlayerRef player)
         {
-            Vector3 spawnPosition = new Vector3(0, 1.07f, 0);
+            Vector3 spawnPosition = new Vector3(0, 0, 0.003f);
             TrackId = trackId;
-
-            spawnPosition = GetRacePlatformLevelVector(trackLevel);
-            Debug.Log($"RaceTrack Vector3 set to: {spawnPosition}");
-
-
+            TrackLevelId = trackLevel;
 
             return Runner.Spawn(
                 _objPrefab,
@@ -398,9 +391,11 @@ namespace cryptokartz.Scripts.GameControllers
             var copy = objTrackGenerator;
 
             copy.TrackId = TrackId;
+            copy.LevelId = TrackLevelId;
             objTrackGenerator = copy;
 
             Debug.Log($"TrackId set to: {objTrackGenerator.TrackId}");
+            Debug.Log($"LevelId set to: {objTrackGenerator.LevelId}");
         }
 
         private void InitializeAvatarBeforeSpawn(NetworkRunner runner, NetworkObject obj)
