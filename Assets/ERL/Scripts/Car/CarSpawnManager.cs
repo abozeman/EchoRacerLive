@@ -5,7 +5,7 @@ using Unity.XR.CoreUtils;
 using UnityEngine;
 using static Unity.Collections.Unicode;
 
-public class LiveCarSpawnManager : NetworkBehaviour
+public class CarSpawnManager : NetworkBehaviour
 {
     public override void Spawned()
     {
@@ -14,6 +14,12 @@ public class LiveCarSpawnManager : NetworkBehaviour
             GetComponent<CarInputManagerLive>().enabled = true;
             GetComponent<CarPositionLiveSubscriber>().enabled = false;
             GetComponent<CarControlDataLivePublisher>().enabled = false;
+        }
+        else
+        {
+            GetComponent<CarInputManagerLive>().enabled = false;
+            GetComponent<CarPositionLiveSubscriber>().enabled = true;
+            GetComponent<CarControlDataLivePublisher>().enabled = true;
         }
     }
 }

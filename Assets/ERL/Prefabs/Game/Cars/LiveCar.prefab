@@ -435,7 +435,6 @@ GameObject:
   - component: {fileID: 6770882094674955917}
   - component: {fileID: 847972504286685316}
   - component: {fileID: 6675130324412907308}
-  - component: {fileID: 293810362774671148}
   - component: {fileID: 5487233863412429559}
   - component: {fileID: 2979770865678875148}
   - component: {fileID: 8596528402767671880}
@@ -445,7 +444,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6770882094674955917
 Transform:
   m_ObjectHideFlags: 0
@@ -454,17 +453,17 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6250101042752984119}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.08, y: 0.08, z: 0.08}
-  m_ConstrainProportionsScale: 1
+  m_LocalRotation: {x: -0.0127064, y: -0.7069926, z: -0.7069926, w: -0.0127064}
+  m_LocalPosition: {x: -0.0392, y: -0.0109, z: 0}
+  m_LocalScale: {x: 0.003947368, y: 0.0075000008, z: 0.005}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7181165358299325276}
   - {fileID: 1816336368520392538}
   - {fileID: 1204252844589769065}
   - {fileID: 8363780381207844690}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 272.05927, y: 90, z: 90}
 --- !u!114 &847972504286685316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -501,21 +500,8 @@ MonoBehaviour:
   - {fileID: 7807953661978306514}
   NetworkedBehaviours:
   - {fileID: 847972504286685316}
-  - {fileID: 293810362774671148}
   - {fileID: 2979770865678875148}
   ForceRemoteRenderTimeframe: 0
---- !u!114 &293810362774671148
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6250101042752984119}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e37c4d02d9a625145b7b93d2c1d79fed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
 --- !u!114 &5487233863412429559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -542,7 +528,7 @@ MonoBehaviour:
   frontLeftWheel: {fileID: 2761524698553299781}
   rearRightWheel: {fileID: 4792320545336397907}
   rearLeftWheel: {fileID: 598617492195803986}
-  startLineOffset: {x: -1.298, y: 1.07, z: 0.139}
+  startLineOffset: {x: 0, y: 0, z: 0}
   vid: echoliveracer1
   CurrentLap: 0
   IsOffTrack: 0

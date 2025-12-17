@@ -51,7 +51,7 @@ MonoBehaviour:
   _reserveSpace: 1
   _reservedMin: {x: 0, y: 0, z: 0}
   _reservedMax: {x: 0, y: 0, z: 0}
-  _globalMeshMaterial: {fileID: 2100000, guid: 599b01c5f1d17436c89b88cc04257314, type: 2}
+  _globalMeshMaterial: {fileID: 2100000, guid: 99aa48f6e9db4453e840646a3c567c72, type: 2}
   _pointsPerUnitX: 2
   _pointsPerUnitY: 2
   _maxPointsCount: 256
