@@ -172,7 +172,19 @@ PrefabInstance:
       value: Camera Rig
       objectReference: {fileID: 0}
     - target: {fileID: 7476484315567247275, guid: 6c036c2379ae43740984d64ca49d9699, type: 3}
+      propertyPath: enableMixedReality
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7476484315567247275, guid: 6c036c2379ae43740984d64ca49d9699, type: 3}
+      propertyPath: requestScenePermissionOnStartup
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7476484315567247275, guid: 6c036c2379ae43740984d64ca49d9699, type: 3}
       propertyPath: SimultaneousHandsAndControllersEnabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7476484315567247275, guid: 6c036c2379ae43740984d64ca49d9699, type: 3}
+      propertyPath: expandMixedRealityCapturePropertySheet
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

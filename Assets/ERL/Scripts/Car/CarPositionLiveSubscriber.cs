@@ -42,7 +42,7 @@ namespace Assets.CryptoKartz.Scripts.Managers
         public float Steering = 0;
         public float Throttle = 0;
 
-        [SerializeField] public bool righthanded = true;
+        [SerializeField] public bool righthanded = false;
 
         #region MQTT Client
 

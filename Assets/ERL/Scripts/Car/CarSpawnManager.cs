@@ -20,6 +20,10 @@ public class CarSpawnManager : NetworkBehaviour
             GetComponent<CarInputManagerLive>().enabled = false;
             GetComponent<CarPositionLiveSubscriber>().enabled = true;
             GetComponent<CarControlDataLivePublisher>().enabled = true;
+
+            Object.GetComponentInParent<XROrigin>().Camera.gameObject.SetActive(false);
+
+
         }
     }
 }
